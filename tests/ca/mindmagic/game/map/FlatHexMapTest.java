@@ -1,6 +1,6 @@
 package ca.mindmagic.game.map;
 
-import ca.mindmagic.game.map.grid.Koordinate;
+import ca.mindmagic.game.map.grid.Coordinate;
 import java.util.Arrays;
 import org.junit.Test;
 
@@ -13,35 +13,35 @@ public class FlatHexMapTest {
 
   Double[] vertices = {-0.5, -height, 0.5, -height, 1.0, 0.0, 0.5, height, -0.5, height, -1.0, 0.0};
 
-  Koordinate origin = new Koordinate(0,0);
-  Koordinate positiveQuadrant = new Koordinate(5,4);
-  Koordinate negativeQuadrant = new Koordinate(6,-1);
-  Koordinate negPosQuadrant = new Koordinate(-2,3);
-  Koordinate posNegQuadrant = new Koordinate(1,-4);
+  Coordinate origin = new Coordinate(0,0);
+  Coordinate positiveQuadrant = new Coordinate(5,4);
+  Coordinate negativeQuadrant = new Coordinate(6,-1);
+  Coordinate negPosQuadrant = new Coordinate(-2,3);
+  Coordinate posNegQuadrant = new Coordinate(1,-4);
 
   @Test
   public void zeroZeroEqualsCoordZeroZero() throws Exception {
-    assertEquals(new Koordinate(0,0), gridCoordinateOf(0,0));
+    assertEquals(new Coordinate(0,0), gridCoordinateOf(0,0));
     //assertEquals(new Koordinate(0,0), map.coordinateOf(0,0));
   }
 
   @Test
   public void zeroOneEqualsCoordOneOne() throws Exception {
-    assertEquals(new Koordinate(1, 1), gridCoordinateOf(0,1));
+    assertEquals(new Coordinate(1, 1), gridCoordinateOf(0,1));
   }
 
   @Test
   public void zeroTwoEqualsCoordOneTwo() throws Exception {
-    assertEquals(new Koordinate(1,2), gridCoordinateOf(0,2));
+    assertEquals(new Coordinate(1,2), gridCoordinateOf(0,2));
   }
 
   @Test
   public void twoZeroEqualsCoordTwoZero() throws Exception {
-    assertEquals(new Koordinate(2,0), gridCoordinateOf(2,0));
+    assertEquals(new Coordinate(2,0), gridCoordinateOf(2,0));
   }
   @Test
   public void oneOneEqualsCoordTwoOne() throws Exception {
-    assertEquals(new Koordinate(2,1), gridCoordinateOf(1,1));
+    assertEquals(new Coordinate(2,1), gridCoordinateOf(1,1));
   }
 
   @Test
@@ -108,12 +108,12 @@ public class FlatHexMapTest {
     assertEquals(6, map.neighborsOf(1,1).size());
   }
 
-  private void testConversionSymmetry(Koordinate mapCoordinate){
+  private void testConversionSymmetry(Coordinate mapCoordinate){
     assertEquals(mapCoordinate, orientation.
         mapCoordinateOf(orientation.gridCoordinateOf(mapCoordinate)));
   }
 
-  private Koordinate gridCoordinateOf(int mapRow, int mapCol){
-    return orientation.gridCoordinateOf(new Koordinate(mapRow, mapCol));
+  private Coordinate gridCoordinateOf(int mapRow, int mapCol){
+    return orientation.gridCoordinateOf(new Coordinate(mapRow, mapCol));
   }
 }

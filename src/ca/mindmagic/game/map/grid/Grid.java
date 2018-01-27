@@ -1,34 +1,33 @@
 package ca.mindmagic.game.map.grid;
 
-import ca.mindmagic.game.map.grid.shape.Shape;
+import ca.mindmagic.game.map.grid.pattern.Shape;
 import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Grid {
 
-	//static final int DEFAULT_SIZE = 40;
 
 	public abstract Shape getShape();
 
-	/*
+	/**
 	 * return the set of all adjacent locations to the specified location
 	 */
-	public abstract Set<Koordinate> neighborsOf(Koordinate location);
+	public abstract Set<Coordinate> neighborsOf(Coordinate location);
 	
 	/**
 	 * Return the set of all locations within the given radius including source location.
 	 * i.e. Radius 0 would return the source tile. Radius 1 would return source tile and
 	 * all its immediate neighbors. Radius 2 would return the source, its neighbors and their neighbors
 	 */
-	public Set<Koordinate> neighborsRadius(Koordinate location, int radius){ // TODO consider switching from sets to arrays
-		Set<Koordinate> results = new HashSet<Koordinate>();
+	public Set<Coordinate> neighborsRadius(Coordinate location, int radius){
+		Set<Coordinate> results = new HashSet<Coordinate>();
 		if(radius < 0){
 			// do nothing
 		} else if (radius == 0){
 			results.add(location);
 		} else {
-			Set<Koordinate> intermediate = neighborsRadius(location, radius -1);
-			for (Koordinate cd : intermediate) {
+			Set<Coordinate> intermediate = neighborsRadius(location, radius -1);
+			for (Coordinate cd : intermediate) {
 				results.addAll(neighborsOf(cd));
 			}
 			results.addAll(intermediate);
@@ -40,11 +39,9 @@ public abstract class Grid {
 	 * Returns all coordinates at the specified radius. Locations
 	 * within that radius are excluded.
 	 */
-	public Set<Koordinate> ring(Koordinate c, int radius){
-//		Set<Koordinate> s = neighborsRadius(c, radius);
-//		s.removeAll(neighborsRadius(c, radius-1));
+	public Set<Coordinate> ring(Coordinate c, int radius){
 		
-		Set<Koordinate> s = new HashSet<Koordinate>();
+		Set<Coordinate> s = new HashSet<>();
 		if (radius < 0){
 			// do nothing
 		} else if (radius == 0){
@@ -54,8 +51,16 @@ public abstract class Grid {
 		}
 		return s;
 	}
-	
-	public abstract int range(Koordinate c1, Koordinate c2);
+
+	/**
+	 * the shortest number of adjacent hops from the first coordinate to the second,
+	 * not counting the first but counting the last. Adjacent coordinates would be range one.
+	 * A coordinate and itself would be range zero.
+	 * @param c1 the first coordinate
+	 * @param c2 the second coordinate
+	 * @return number of hops from c1 to c2
+	 */
+	public abstract int range(Coordinate c1, Coordinate c2);
 	
 	//public Point[] getVertices(Koordinate c){
 	//	return getVertices(c.getRow(), c.getColumn());

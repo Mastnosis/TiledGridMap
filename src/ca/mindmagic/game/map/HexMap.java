@@ -27,7 +27,7 @@ package ca.mindmagic.game.map;
  *
  */
 
-import ca.mindmagic.game.map.grid.Koordinate;
+import ca.mindmagic.game.map.grid.Coordinate;
 import ca.mindmagic.game.map.grid.Grid;
 import ca.mindmagic.game.map.grid.HexGrid;
 import java.util.Arrays;
@@ -51,7 +51,7 @@ public class HexMap implements GridMap{
   protected final int width;
   protected final boolean wrapWidth;
   protected final boolean wrapHeight;
-  Map<Koordinate, Set<Koordinate>> locations;
+  Map<Coordinate, Set<Coordinate>> locations;
 
   public HexMap(int width, int height) {
     this(width, height, Orientation.POINTED_TOP);
@@ -71,30 +71,30 @@ public class HexMap implements GridMap{
     locations = new HashMap<>();
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        Koordinate c = new Koordinate(i, j);
+        Coordinate c = new Coordinate(i, j);
         locations.put(c, calcNeighborsOf(c));
       }
     }
 
   }
 
-  public Set<Koordinate> neighborsOf(Koordinate mapLocation){
+  public Set<Coordinate> neighborsOf(Coordinate mapLocation){
     if(locations.containsKey(mapLocation)){
       return locations.get(mapLocation);
     }
     return Collections.emptySet();
   }
 
-  public Set<Koordinate> neighborsOf(int mapRow, int mapCol){
-    return neighborsOf(new Koordinate(mapRow, mapCol));
+  public Set<Coordinate> neighborsOf(int mapRow, int mapCol){
+    return neighborsOf(new Coordinate(mapRow, mapCol));
   }
 
-  private Set<Koordinate> calcNeighborsOf(Koordinate mapLocation){
+  private Set<Coordinate> calcNeighborsOf(Coordinate mapLocation){
     return calcNeighborsOf(mapLocation.getRow(), mapLocation.getCol());
   }
 
-  private Set<Koordinate> calcNeighborsOf(int mapRow, int mapCol){
-    Set<Koordinate> neighbors = grid.neighborsOf(orientation.gridCoordinateOf(mapRow, mapCol));
+  private Set<Coordinate> calcNeighborsOf(int mapRow, int mapCol){
+    Set<Coordinate> neighbors = grid.neighborsOf(orientation.gridCoordinateOf(mapRow, mapCol));
     return neighbors.stream()
         .map(this.orientation::mapCoordinateOf)
         .filter(this::ifMapContains)
@@ -105,9 +105,9 @@ public class HexMap implements GridMap{
     return orientation;
   }
 
-  public int range(Koordinate source, Koordinate target){
-    Koordinate gridSource = orientation.gridCoordinateOf(source);
-    Koordinate gridTarget = orientation.gridCoordinateOf(target);
+  public int range(Coordinate source, Coordinate target){
+    Coordinate gridSource = orientation.gridCoordinateOf(source);
+    Coordinate gridTarget = orientation.gridCoordinateOf(target);
     return grid.range(gridSource, gridTarget);
   }
 
@@ -119,15 +119,15 @@ public class HexMap implements GridMap{
     return width;
   }
 
-  @Override public Set<Koordinate> getLocations(){
+  @Override public Set<Coordinate> getLocations(){
     return locations.keySet();
   }
 
-  public Koordinate coordinateOf(int row, int col){
+  public Coordinate coordinateOf(int row, int col){
     return orientation.gridCoordinateOf(row, col);
   }
 
-  public boolean ifMapContains(Koordinate c){
+  public boolean ifMapContains(Coordinate c){
     return ifMapContains(c.getRow(), c.getCol());
   }
 
@@ -141,7 +141,7 @@ public class HexMap implements GridMap{
     return true;
 }
 
-  public Double[] verticesOf(Koordinate c){
+  public Double[] verticesOf(Coordinate c){
     return orientation.verticesOf(c);
   }
 
@@ -153,7 +153,7 @@ public class HexMap implements GridMap{
     return orientation.verticesOf(row, col);
   }
 
-  public Double[] centerOf(Koordinate coordinate){
+  public Double[] centerOf(Coordinate coordinate){
     return centerOf(coordinate.getRow(), coordinate.getCol());
   }
 
@@ -215,20 +215,20 @@ public class HexMap implements GridMap{
       this.yValues = yOfPoints;
     }
 
-    Koordinate gridCoordinateOf(Koordinate mapCoordinate){
+    Coordinate gridCoordinateOf(Coordinate mapCoordinate){
       return gridCoordinateOf(mapCoordinate.getRow(), mapCoordinate.getCol());
     }
 
-    Koordinate gridCoordinateOf(int mapRow, int mapCol){
-      return new Koordinate(toGridRow.applyAsInt(mapRow,mapCol), toGridCol.applyAsInt(mapRow,mapCol));
+    Coordinate gridCoordinateOf(int mapRow, int mapCol){
+      return new Coordinate(toGridRow.applyAsInt(mapRow,mapCol), toGridCol.applyAsInt(mapRow,mapCol));
     }
 
-    Koordinate mapCoordinateOf(Koordinate gridCoordinate){
+    Coordinate mapCoordinateOf(Coordinate gridCoordinate){
       return mapCoordinateOf(gridCoordinate.getRow(), gridCoordinate.getCol());
     }
 
-    Koordinate mapCoordinateOf(int gridRow, int gridCol){
-      return new Koordinate(
+    Coordinate mapCoordinateOf(int gridRow, int gridCol){
+      return new Coordinate(
           toMapRow.applyAsInt(gridRow, gridCol),
           toMapCol.applyAsInt(gridRow, gridCol)
       );
@@ -241,11 +241,11 @@ public class HexMap implements GridMap{
       return new Double[]{x,y};
     }
 
-    Double[] centerOf(Koordinate coordinate){
+    Double[] centerOf(Coordinate coordinate){
       return centerOf(coordinate.getRow(), coordinate.getCol());
     }
 
-    Double[] verticesOf(Koordinate mapCoordinate){
+    Double[] verticesOf(Coordinate mapCoordinate){
       return verticesOf(mapCoordinate.getRow(), mapCoordinate.getCol());
     }
 
@@ -264,7 +264,7 @@ public class HexMap implements GridMap{
       return Arrays.stream(verticesOf(mapRow, mapCol)).map(x -> Math.rint(x*sideLength)).toArray(Double[]::new);
     }
 
-    public Double[] verticesOf(Koordinate location, int sideLength){
+    public Double[] verticesOf(Coordinate location, int sideLength){
       return verticesOf(location.getRow(), location.getCol(), sideLength);
     }
 

@@ -1,4 +1,4 @@
-package ca.mindmagic.game.map.grid.shape;
+package ca.mindmagic.game.map.grid.pattern;
 
 import java.awt.Point;
 import java.util.Arrays;
@@ -8,8 +8,6 @@ public class Hexagon extends Shape{
   // HEIGHT = shortest distance between the center and any of the hex sides
   // where sideLength is equal to one.
   public static final float HEIGHT = (float)Math.sqrt(0.75);
-
-  enum Orientation{FLAT, POINTED}
 
   public Hexagon(){
     super();

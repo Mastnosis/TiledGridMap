@@ -1,7 +1,7 @@
 package ca.mindmagic.game.map.grid;
 
-import ca.mindmagic.game.map.grid.shape.Hexagon;
-import ca.mindmagic.game.map.grid.shape.Shape;
+import ca.mindmagic.game.map.grid.pattern.Hexagon;
+import ca.mindmagic.game.map.grid.pattern.Shape;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -17,8 +17,8 @@ public class HexGrid extends Grid{
 			this.row = row;
 			this.col = col;
 		}
-		Koordinate move(Koordinate start){
-			return new Koordinate(start.row + row, start.column + col);
+		Coordinate move(Coordinate start){
+			return new Coordinate(start.getRow() + row, start.getCol() + col);
 		}
 
 	}
@@ -40,21 +40,21 @@ public class HexGrid extends Grid{
 	}
 
 	@Override
-	public Set<Koordinate> neighborsOf(Koordinate hex) {
-		Set<Koordinate> neighbors = new LinkedHashSet<>();
-		neighbors.add(new Koordinate(hex.row-1,hex.column));
-		neighbors.add(new Koordinate(hex.row, hex.column+1));
-		neighbors.add(new Koordinate(hex.row+1, hex.column+1));
-		neighbors.add(new Koordinate(hex.row+1, hex.column));
-		neighbors.add(new Koordinate(hex.row, hex.column-1));
-		neighbors.add(new Koordinate(hex.row-1, hex.column-1));
+	public Set<Coordinate> neighborsOf(Coordinate hex) {
+		Set<Coordinate> neighbors = new LinkedHashSet<>();
+		neighbors.add(new Coordinate(hex.getRow() -1,hex.getCol()));
+		neighbors.add(new Coordinate(hex.getRow(), hex.getCol()+1));
+		neighbors.add(new Coordinate(hex.getRow() +1, hex.getCol()+1));
+		neighbors.add(new Coordinate(hex.getRow() +1, hex.getCol()));
+		neighbors.add(new Coordinate(hex.getRow(), hex.getCol()-1));
+		neighbors.add(new Coordinate(hex.getRow() -1, hex.getCol()-1));
 		return neighbors;
 	}
 
 
 	@Override
-	public int range(Koordinate source, Koordinate target) {
-		return range(source.row, source.column, target.row, target.column);
+	public int range(Coordinate source, Coordinate target) {
+		return range(source.getRow(), source.getCol(), target.getRow(), target.getCol());
 	}
 
 
@@ -73,7 +73,7 @@ public class HexGrid extends Grid{
 	 * @return column number converted to axial value
 	 */
 	//private int convertColToAxial(Koordinate c){
-	//	return (int)(c.column + Math.ceil(c.row/2.0));
+	//	return (int)(c.getCol() + Math.ceil(c.row/2.0));
 	//}
 
 	//@Override

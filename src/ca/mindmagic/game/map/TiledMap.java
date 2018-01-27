@@ -1,7 +1,7 @@
 package ca.mindmagic.game.map;
 
 import ca.mindmagic.game.map.grid.Grid;
-import ca.mindmagic.game.map.grid.Koordinate;
+import ca.mindmagic.game.map.grid.Coordinate;
 import ca.mindmagic.game.map.tile.Tile;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,9 +39,9 @@ public class TiledMap {
 		initTiles();
 	}
 
-	public Set<Tile> getAllTilesInRange(Koordinate center, int range){
+	public Set<Tile> getAllTilesInRange(Coordinate center, int range){
 		Set<Tile> inRange = new HashSet<>();
-		for (Koordinate c: grid.neighborsRadius(center, range)
+		for (Coordinate c: grid.neighborsRadius(center, range)
 		) {
 			if(getTile(c) == null) continue;
 			inRange.add(getTile(c));
@@ -63,12 +63,12 @@ public class TiledMap {
     int index = tiles.indexOf(tile);
   }
 
-  public Tile getTile(Koordinate c){	// TODO add out of bounds checking
-		int index = c.getRow()*width + c.getColumn();
+  public Tile getTile(Coordinate c){	// TODO add out of bounds checking
+		int index = c.getRow()*width + c.getCol();
 		return tiles.get(index);
 	}
 
-	public Koordinate getCoordinate(Tile tile){
+	public Coordinate getCoordinate(Tile tile){
 		return null;
 	}
 	

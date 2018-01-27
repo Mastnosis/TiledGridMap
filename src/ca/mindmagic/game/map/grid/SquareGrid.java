@@ -1,7 +1,7 @@
 package ca.mindmagic.game.map.grid;
 
-import ca.mindmagic.game.map.grid.shape.Shape;
-import ca.mindmagic.game.map.grid.shape.Square;
+import ca.mindmagic.game.map.grid.pattern.Shape;
+import ca.mindmagic.game.map.grid.pattern.Square;
 import java.awt.Point;
 import java.util.Set;
 
@@ -20,15 +20,12 @@ public class SquareGrid extends Grid {
 		this.sideLength = sideLength;
 	}
 
-	public Point[] getVertices(Koordinate c){
+	public Point[] getVertices(Coordinate c){
 		return getVertices(c, sideLength);
 	}
-  //
-	//@Override public Point[] getVertices(int x, int y) {
-	//	return new Point[0];
-	//}
 
-	public static Point[] getVertices(Koordinate c, int sideLength) {
+
+	public static Point[] getVertices(Coordinate c, int sideLength) {
 		Point[] points = new Point[4];
 		points[0] = topLeft(c, sideLength);
 		points[1] = topRight(c, sideLength);
@@ -42,23 +39,23 @@ public class SquareGrid extends Grid {
 		return sideLength;
 	}
 
-	private static Point bottomRight(Koordinate c, int sidelength) {
-		return new Point(c.row+1*sidelength, c.column+1*sidelength);
+	private static Point bottomRight(Coordinate c, int sidelength) {
+		return new Point(c.getRow() +1*sidelength, c.getCol()+1*sidelength);
 	}
 
-	private static Point bottomLeft(Koordinate c, int sidelength) {
-		return new Point(c.row*sidelength, c.column+1*sidelength);
+	private static Point bottomLeft(Coordinate c, int sidelength) {
+		return new Point(c.getRow() *sidelength, c.getCol()+1*sidelength);
 	}
 
-	private static Point topRight(Koordinate c, int sidelength) {
-		return new Point(c.row+1*sidelength, c.column*sidelength);
+	private static Point topRight(Coordinate c, int sidelength) {
+		return new Point(c.getRow() +1*sidelength, c.getCol()*sidelength);
 	}
 
-	private static Point topLeft(Koordinate c, int sidelength) {
-		return new Point(c.column*sidelength, c.row*sidelength);
+	private static Point topLeft(Coordinate c, int sidelength) {
+		return new Point(c.getCol()*sidelength, c.getRow() *sidelength);
 	}
 
-	public static Point getCenterPoint(Koordinate c, int sidelength) {
+	public static Point getCenterPoint(Coordinate c, int sidelength) {
 		Point p = topLeft(c, sidelength);
 		int halfOfSide = sidelength/2;
 		return new Point(p.x+halfOfSide, p.y + halfOfSide);
@@ -69,25 +66,17 @@ public class SquareGrid extends Grid {
 	}
 
 	@Override
-	public Set<Koordinate> neighborsOf(Koordinate c) {
+	public Set<Coordinate> neighborsOf(Coordinate c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int range(Koordinate c1, Koordinate c2) {
+	public int range(Coordinate c1, Coordinate c2) {
 		int range = 0;
-		range += Math.abs(c1.column - c2.column);
-		range += Math.abs(c1.row - c2.row);
+		range += Math.abs(c1.getCol() - c2.getCol());
+		range += Math.abs(c1.getRow() - c2.getRow());
 		return range;
 	}
 
-	//@Override
-	//public Point getCenterPoint(Koordinate c) {
-	//	return getCenterPoint(c, sideLength);
-	//}
-  //
-	//@Override public Point getCenterPoint(int x, int y) {
-	//	return null;
-	//}
 }

@@ -1,6 +1,6 @@
 package ca.mindmagic.game.map;
 
-import ca.mindmagic.game.map.grid.Koordinate;
+import ca.mindmagic.game.map.grid.Coordinate;
 import java.util.Arrays;
 import org.junit.Test;
 
@@ -11,52 +11,52 @@ public class PointedHexMapTest {
   private HexMap.Orientation orientation = map.getOrientation();
   double height = Math.sqrt(0.75);
 
-  Koordinate origin = new Koordinate(0,0);
-  Koordinate positiveQuadrant = new Koordinate(5,4);
-  Koordinate negativeQuadrant = new Koordinate(6,-1);
-  Koordinate negPosQuadrant = new Koordinate(-2,3);
-  Koordinate posNegQuadrant = new Koordinate(1,-4);
+  Coordinate origin = new Coordinate(0,0);
+  Coordinate positiveQuadrant = new Coordinate(5,4);
+  Coordinate negativeQuadrant = new Coordinate(6,-1);
+  Coordinate negPosQuadrant = new Coordinate(-2,3);
+  Coordinate posNegQuadrant = new Coordinate(1,-4);
 
   Double[] vertices = {0.0, 1.0, height, -0.5, height, 0.5, 0.0, 1.0, -height, 0.5, -height, -0.5};
   Double[] scaledVertices = {0.0, 30.0, 26.0, -15.0, 26.0, 15.0, 0.0, 30.0, -26.0, 15.0, -26.0, -15.0};
 
   @Test
   public void zeroZeroEqualsCoordZeroZero() throws Exception {
-    assertEquals(new Koordinate(0,0), map.coordinateOf(0,0));
+    assertEquals(new Coordinate(0,0), map.coordinateOf(0,0));
   }
 
   @Test
   public void zeroOneEqualsCoordOneOne() throws Exception {
-    assertEquals(new Koordinate(0, 1), map.coordinateOf(0,1));
+    assertEquals(new Coordinate(0, 1), map.coordinateOf(0,1));
   }
 
   @Test
   public void zeroTwoEqualsCoordOneTwo() throws Exception {
-    assertEquals(new Koordinate(0,2), map.coordinateOf(0,2));
+    assertEquals(new Coordinate(0,2), map.coordinateOf(0,2));
   }
 
   @Test
   public void twoZeroEqualsCoordTwoZero() throws Exception {
-    assertEquals(new Koordinate(1,2), map.coordinateOf(1,1));
+    assertEquals(new Coordinate(1,2), map.coordinateOf(1,1));
   }
 
   @Test
   public void oneOneEqualsCoordTwoOne() throws Exception {
-    assertEquals(new Koordinate(2,1), map.coordinateOf(2,0));
+    assertEquals(new Coordinate(2,1), map.coordinateOf(2,0));
   }
 
   @Test
   public void oneZeroEqualsCoordOneOne() throws Exception {
-    assertEquals(new Koordinate(1,1), map.coordinateOf(1,0));
+    assertEquals(new Coordinate(1,1), map.coordinateOf(1,0));
   }
 
   @Test
   public void negOneZeroEqualsCoordNegOneZero() throws Exception {
-    assertEquals(new Koordinate(-1,0), map.coordinateOf(-1,0));
+    assertEquals(new Coordinate(-1,0), map.coordinateOf(-1,0));
   }
  @Test
   public void zeroNegOneEqualsCoordNegOneZero() throws Exception {
-    assertEquals(new Koordinate(0,-1), map.coordinateOf(0,-1));
+    assertEquals(new Coordinate(0,-1), map.coordinateOf(0,-1));
   }
 
   @Test
@@ -109,12 +109,12 @@ public class PointedHexMapTest {
 
   @Test
   public void coordinateExistAndReturnTrue() throws Exception {
-    assertTrue(map.ifMapContains(new Koordinate(0,0)));
+    assertTrue(map.ifMapContains(new Coordinate(0,0)));
   }
 
   @Test
   public void coordinateDoesNotExist() throws Exception {
-    assertFalse(map.ifMapContains(new Koordinate(-1,0)));
+    assertFalse(map.ifMapContains(new Coordinate(-1,0)));
   }
 
   @Test
@@ -134,8 +134,7 @@ public class PointedHexMapTest {
 
   @Test
   public void verticesScale() throws Exception {
-    Double[] scaled = orientation.verticesOf(origin.row, origin.column, 30);
-    System.out.println(Arrays.toString(scaled));
+    Double[] scaled = orientation.verticesOf(origin.getRow(), origin.getCol(), 30);
     assertTrue(Arrays.equals(scaledVertices, scaled));
   }
 
@@ -148,7 +147,7 @@ public class PointedHexMapTest {
     testConversionSymmetry(negPosQuadrant);
   }
 
-  private void testConversionSymmetry(Koordinate mapCoordinate){
+  private void testConversionSymmetry(Coordinate mapCoordinate){
     assertEquals(mapCoordinate, orientation.
         mapCoordinateOf(orientation.gridCoordinateOf(mapCoordinate)));
   }
