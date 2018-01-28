@@ -4,22 +4,22 @@ import ca.mindmagic.game.map.grid.pattern.Shape;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Grid {
+public interface Grid {
 
 
-	public abstract Shape getShape();
+	Shape getShape();
 
 	/**
 	 * return the set of all adjacent locations to the specified location
 	 */
-	public abstract Set<Coordinate> neighborsOf(Coordinate location);
+	Set<Coordinate> neighborsOf(Coordinate location);
 	
 	/**
 	 * Return the set of all locations within the given radius including source location.
 	 * i.e. Radius 0 would return the source tile. Radius 1 would return source tile and
 	 * all its immediate neighbors. Radius 2 would return the source, its neighbors and their neighbors
 	 */
-	public Set<Coordinate> neighborsRadius(Coordinate location, int radius){
+	default Set<Coordinate> neighborsRadius(Coordinate location, int radius){
 		Set<Coordinate> results = new HashSet<Coordinate>();
 		if(radius < 0){
 			// do nothing
@@ -39,7 +39,7 @@ public abstract class Grid {
 	 * Returns all coordinates at the specified radius. Locations
 	 * within that radius are excluded.
 	 */
-	public Set<Coordinate> ring(Coordinate c, int radius){
+	default Set<Coordinate> ring(Coordinate c, int radius){
 		
 		Set<Coordinate> s = new HashSet<>();
 		if (radius < 0){
@@ -60,7 +60,7 @@ public abstract class Grid {
 	 * @param c2 the second coordinate
 	 * @return number of hops from c1 to c2
 	 */
-	public abstract int range(Coordinate c1, Coordinate c2);
+	int range(Coordinate c1, Coordinate c2);
 	
 	//public Point[] getVertices(Koordinate c){
 	//	return getVertices(c.getRow(), c.getColumn());

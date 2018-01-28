@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 
-public class HexGrid extends Grid{
+public class HexGrid implements Grid{
 
 	public enum Direction{
 		A(-1,0), B(0,1), C(1,1), D(1,0), E(0,-1), F(-1,-1);

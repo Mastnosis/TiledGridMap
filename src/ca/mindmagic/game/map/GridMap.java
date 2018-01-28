@@ -16,11 +16,11 @@ public interface GridMap {
   int range(Coordinate c1, Coordinate c2);
   Set<Coordinate> getLocations();
 
-  default boolean ifLocationExistsOnMap(Coordinate location){
-    return ifLocationExistsOnMap(location.getRow(), location.getCol());
+  default boolean locationExistsOnMap(Coordinate location){
+    return locationExistsOnMap(location.getRow(), location.getCol());
   }
 
-  default boolean ifLocationExistsOnMap(int row, int col){
+  default boolean locationExistsOnMap(int row, int col){
     if(row < 0 || row > height()) return false;
     if(col < 0 || col > width()) return false;
     return true;
