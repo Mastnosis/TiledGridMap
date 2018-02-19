@@ -9,8 +9,7 @@ import java.util.Set;
 public class SquareGrid implements Grid {
 
 	int sideLength;
-	Shape shape = new Square();
-	
+
 	protected boolean diagonalIsAdjacent = false;
 
 
@@ -22,6 +21,13 @@ public class SquareGrid implements Grid {
 		return getVertices(c, sideLength);
 	}
 
+	@Override public Point[] getVertices(int row, int col) {
+		return new Point[0];
+	}
+
+	@Override public Point getCenterPoint(int x, int y) {
+		return null;
+	}
 
 	public static Point[] getVertices(Coordinate c, int sideLength) {
 		Point[] points = new Point[4];
@@ -41,10 +47,6 @@ public class SquareGrid implements Grid {
 		Point p = topLeft(c, sideLength);
 		int halfOfSide = sideLength/2;
 		return new Point(p.x+halfOfSide, p.y + halfOfSide);
-	}
-
-	@Override public Shape getShape() {
-		return shape;
 	}
 
 	@Override

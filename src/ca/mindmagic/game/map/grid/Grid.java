@@ -1,13 +1,11 @@
 package ca.mindmagic.game.map.grid;
 
-import ca.mindmagic.game.map.grid.pattern.Shape;
+import java.awt.Point;
 import java.util.HashSet;
 import java.util.Set;
 
 public interface Grid {
 
-
-	Shape getShape();
 
 	/**
 	 * return the set of all adjacent locations to the specified location
@@ -17,39 +15,40 @@ public interface Grid {
 	/**
 	 * Return the set of all locations within the given radius including source location.
 	 * i.e. Radius 0 would return the source tile. Radius 1 would return source tile and
-	 * all its immediate neighbors. Radius 2 would return the source, its neighbors and their neighbors
+	 * all its immediate neighbors. Radius 2 would return the source, its neighbors and their
+	 * neighbors etc.
+   * @param source the center location
+   * @param radius the range from the center
+   * @return all the coordinates within the radius of the center
 	 */
-	default Set<Coordinate> neighborsRadius(Coordinate location, int radius){
+	default Set<Coordinate> getArea(Coordinate source, int radius){
 		Set<Coordinate> results = new HashSet<Coordinate>();
 		if(radius < 0){
 			// do nothing
 		} else if (radius == 0){
-			results.add(location);
+			results.add(source);
 		} else {
-			Set<Coordinate> intermediate = neighborsRadius(location, radius -1);
-			for (Coordinate cd : intermediate) {
-				results.addAll(neighborsOf(cd));
-			}
-			results.addAll(intermediate);
+			Set<Coordinate> intermediate = getArea(source, radius -1);
+      results.addAll(intermediate);
+      for (Coordinate cd : intermediate) {
+        results.addAll(neighborsOf(cd));
+      }
 		}
 		return results;
 	}
+
+	default Set<Coordinate> getArea(int row, int col, int radius){
+    return getArea(new Coordinate(row, col), radius);
+  }
 
 	/**
 	 * Returns all coordinates at the specified radius. Locations
 	 * within that radius are excluded.
 	 */
 	default Set<Coordinate> ring(Coordinate c, int radius){
-		
-		Set<Coordinate> s = new HashSet<>();
-		if (radius < 0){
-			// do nothing
-		} else if (radius == 0){
-			s.add(c);
-		} else {
-			s.addAll(ring(c, radius -1));
-		}
-		return s;
+		Set<Coordinate> set = getArea(c, radius);
+		set.removeAll(getArea(c, radius -1));
+		return set;
 	}
 
 	/**
@@ -62,11 +61,13 @@ public interface Grid {
 	 */
 	int range(Coordinate c1, Coordinate c2);
 	
-	//public Point[] getVertices(Koordinate c){
-	//	return getVertices(c.getRow(), c.getColumn());
-	//}
-  //
-	//public Point[] getVertices(int row, int col){
+	default Point[] getVertices(Coordinate c){
+		return getVertices(c.getRow(), c.getCol());
+	}
+
+	Point[] getVertices(int row, int col);
+
+	//default Point[] getVertices(int row, int col){
 	//	Point[] vertices = new Point[getShape().numberOfSides()];
 	//	Point centerPoint = getCenterPoint(row, col);
 	//	int index = 0;
@@ -76,11 +77,10 @@ public interface Grid {
 	//	}
 	//	return vertices;
 	//}
-	//
-	//public Point getCenterPoint(Koordinate c){
-	//	return getCenterPoint(c.row, c.column);
-	//}
-  //
-  //
-	//public abstract Point getCenterPoint(int x, int y);
+
+	default Point getCenterPoint(Coordinate c){
+		return getCenterPoint(c.getRow(), c.getCol());
+	}
+
+	Point getCenterPoint(int x, int y);
 }

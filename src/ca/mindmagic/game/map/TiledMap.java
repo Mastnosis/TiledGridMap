@@ -41,7 +41,7 @@ public class TiledMap {
 
 	public Set<Tile> getAllTilesInRange(Coordinate center, int range){
 		Set<Tile> inRange = new HashSet<>();
-		for (Coordinate c: grid.neighborsRadius(center, range)
+		for (Coordinate c: grid.getArea(center, range)
 		) {
 			if(getTile(c) == null) continue;
 			inRange.add(getTile(c));
@@ -64,7 +64,8 @@ public class TiledMap {
   }
 
   public Tile getTile(Coordinate c){	// TODO add out of bounds checking
-		int index = c.getRow()*width + c.getCol();
+		int index = c.getRow()*width + c.getCol
+				();
 		return tiles.get(index);
 	}
 

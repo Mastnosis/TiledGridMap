@@ -39,29 +39,28 @@ import java.util.function.IntBinaryOperator;
 import java.util.function.ToDoubleBiFunction;
 import java.util.stream.Collectors;
 
-public class HexMap implements GridMap{
+public class HexMap extends GridMap{
 
   private static final double H = Math.sqrt(0.75);
 
   final Orientation orientation;
 
-  static Grid grid = new HexGrid();
 
-  protected final int height;
-  protected final int width;
+
   protected final boolean wrapWidth;
   protected final boolean wrapHeight;
   Map<Coordinate, Set<Coordinate>> locations;
 
-  public HexMap(int width, int height) {
-    this(width, height, Orientation.POINTED_TOP);
+  public HexMap(int height, int width) {
+    this(height, width, Orientation.POINTED_TOP);
   }
 
-  public HexMap(int width, int height, Orientation orientation){
-    this(width, height, false, false, orientation);
+  public HexMap(int height, int width, Orientation orientation){
+    this(height, width, false, false, orientation);
   }
 
-  public HexMap(int width, int height, boolean wrapWidth, boolean wrapHeight, Orientation orientation){
+  public HexMap(int height, int width, boolean wrapWidth, boolean wrapHeight, Orientation orientation){
+    super(height, width, new HexGrid());
     this.orientation = orientation;
     this.width = width;
     this.height = height;
@@ -89,10 +88,12 @@ public class HexMap implements GridMap{
     return neighborsOf(new Coordinate(mapRow, mapCol));
   }
 
+  @Deprecated
   private Set<Coordinate> calcNeighborsOf(Coordinate mapLocation){
     return calcNeighborsOf(mapLocation.getRow(), mapLocation.getCol());
   }
 
+  @Deprecated
   private Set<Coordinate> calcNeighborsOf(int mapRow, int mapCol){
     Set<Coordinate> neighbors = grid.neighborsOf(orientation.gridCoordinateOf(mapRow, mapCol));
     return neighbors.stream()
@@ -109,14 +110,6 @@ public class HexMap implements GridMap{
     Coordinate gridSource = orientation.gridCoordinateOf(source);
     Coordinate gridTarget = orientation.gridCoordinateOf(target);
     return grid.range(gridSource, gridTarget);
-  }
-
-  @Override public int height() {
-    return height;
-  }
-
-  @Override public int width() {
-    return width;
   }
 
   @Override public Set<Coordinate> getLocations(){
