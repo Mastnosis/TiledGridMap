@@ -2,7 +2,9 @@ package ca.mindmagic.game.map;
 
 import ca.mindmagic.game.map.grid.Coordinate;
 import ca.mindmagic.game.map.grid.Grid;
+import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class GridMap {
 
@@ -38,11 +40,20 @@ public abstract class GridMap {
     return locationExistsOnMap(location.getRow(), location.getCol());
   }
 
-  public Set<Coordinate> getArea(int row, int col, int radius){
-    Set<Coordinate> set = grid.getArea(row, col, radius);
-
-    return set;
+  public Set<Coordinate> getArea(Coordinate c, int radius){
+    return grid.getArea(mapToGridCoordinate(c), radius).stream()
+        .map(this::gridToMapCoordinate)
+        .filter(this::locationExistsOnMap)
+        .collect(Collectors.toSet());
   }
+
+  public Set<Coordinate> getArea(int row, int col, int radius){
+    return getArea(new Coordinate(row, col), radius);
+  }
+
+  protected abstract Coordinate mapToGridCoordinate(Coordinate c);
+
+  protected abstract Coordinate gridToMapCoordinate(Coordinate c);
 
   public boolean locationExistsOnMap(int row, int col){
     if(row < 0 || row > height) return false;

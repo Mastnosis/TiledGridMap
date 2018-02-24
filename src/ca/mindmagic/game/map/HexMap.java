@@ -41,11 +41,7 @@ import java.util.stream.Collectors;
 
 public class HexMap extends GridMap{
 
-  private static final double H = Math.sqrt(0.75);
-
   final Orientation orientation;
-
-
 
   protected final boolean wrapWidth;
   protected final boolean wrapHeight;
@@ -78,10 +74,11 @@ public class HexMap extends GridMap{
   }
 
   public Set<Coordinate> neighborsOf(Coordinate mapLocation){
-    if(locations.containsKey(mapLocation)){
-      return locations.get(mapLocation);
-    }
-    return Collections.emptySet();
+    //if(locations.containsKey(mapLocation)){
+    //  return locations.get(mapLocation);
+    //}
+    //return Collections.emptySet();
+    return calcNeighborsOf(mapLocation);
   }
 
   public Set<Coordinate> neighborsOf(int mapRow, int mapCol){
@@ -95,11 +92,39 @@ public class HexMap extends GridMap{
 
   @Deprecated
   private Set<Coordinate> calcNeighborsOf(int mapRow, int mapCol){
-    Set<Coordinate> neighbors = grid.neighborsOf(orientation.gridCoordinateOf(mapRow, mapCol));
-    return neighbors.stream()
+    Set<Coordinate> neighbors = grid.neighborsOf(mapToGridCoordinate(new Coordinate(mapRow, mapCol)))
+        .stream()
         .map(this.orientation::mapCoordinateOf)
-        .filter(this::ifMapContains)
+        .filter(this::locationExistsOnMap)
         .collect(Collectors.toSet());
+    //if(wrapHeight){
+    //  if(0 == mapRow){
+    //
+    //  }
+    //  if(height - 1 == mapRow){
+    //
+    //  }
+    //}
+    if(wrapWidth && orientation == Orientation.POINTED_TOP){
+      if (mapCol == 0) {
+        for (Coordinate gc : grid.neighborsOf(orientation.gridCoordinateOf(mapRow, mapCol))) {
+          Coordinate mc = gridToMapCoordinate(gc);
+          if(mc.getCol() == -1){
+            Coordinate wrapped = new Coordinate(mc.getRow(), width -1);
+            if (locationExistsOnMap(wrapped)) {
+              neighbors.add(wrapped);
+            }
+          }
+          if(mc.getCol() == width){
+            Coordinate wrapped = new Coordinate(mc.getRow(), 0);
+            if (locationExistsOnMap(wrapped)) {
+              neighbors.add(wrapped);
+            }
+          }
+        }
+      }
+    }
+    return neighbors;
   }
 
   public Orientation getOrientation(){
@@ -116,23 +141,20 @@ public class HexMap extends GridMap{
     return locations.keySet();
   }
 
+  @Override protected Coordinate mapToGridCoordinate(Coordinate c) {
+    return orientation.gridCoordinateOf(c);
+  }
+
+  @Override protected Coordinate gridToMapCoordinate(Coordinate c) {
+    return orientation.mapCoordinateOf(c);
+  }
+
+  @Deprecated
   public Coordinate coordinateOf(int row, int col){
     return orientation.gridCoordinateOf(row, col);
   }
 
-  public boolean ifMapContains(Coordinate c){
-    return ifMapContains(c.getRow(), c.getCol());
-  }
 
-  public boolean ifMapContains(int row, int col){
-    if(row < 0 || row >= height){
-      return false;
-    }
-    if(col < 0 || col >= width){
-      return false;
-    }
-    return true;
-}
 
   public Double[] verticesOf(Coordinate c){
     return orientation.verticesOf(c);
@@ -153,6 +175,14 @@ public class HexMap extends GridMap{
   public Double[] centerOf(int row, int col){
     return orientation.centerOf(row, col);
   }
+
+  /**
+   * Orientation - for a square map, there are two primary orientations for a hex grid; either
+   * pointed top or flat top. These alter the calculation of row and column indexes as well as the points of the
+   * hexagon vertices.
+   */
+
+  private static final double H = Math.sqrt(0.75);
 
   public enum Orientation{
     POINTED_TOP(

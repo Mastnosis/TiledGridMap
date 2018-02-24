@@ -2,6 +2,7 @@ package ca.mindmagic.game.map;
 
 import ca.mindmagic.game.map.grid.Coordinate;
 import java.util.Arrays;
+import java.util.Set;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -106,6 +107,17 @@ public class FlatHexMapTest {
   @Test
   public void non_edge_hex_has_six_neighbors() throws Exception {
     assertEquals(6, map.neighborsOf(1,1).size());
+  }
+
+  @Test public void getArea_returns_correct_hexes(){
+    Set<Coordinate> area = map.getArea(1,1, 1);
+    assertTrue("top", area.contains(new Coordinate(0,1)));
+    assertTrue("leftTop", area.contains(new Coordinate(1,0)));
+    assertTrue("leftBottom", area.contains(new Coordinate(2,0)));
+    assertTrue("center", area.contains(new Coordinate(1,1)));
+    assertTrue("rightTop", area.contains(new Coordinate(1,2)));
+    assertTrue("rightBottom", area.contains(new Coordinate(2,2)));
+    assertTrue("Bottom", area.contains(new Coordinate(2,1)));
   }
 
   private void testConversionSymmetry(Coordinate mapCoordinate){

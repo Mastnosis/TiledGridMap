@@ -17,8 +17,8 @@ public class PointedHexMapTest {
   Coordinate negPosQuadrant = new Coordinate(-2,3);
   Coordinate posNegQuadrant = new Coordinate(1,-4);
 
-  Double[] vertices = {0.0, 1.0, height, -0.5, height, 0.5, 0.0, 1.0, -height, 0.5, -height, -0.5};
-  Double[] scaledVertices = {0.0, 30.0, 26.0, -15.0, 26.0, 15.0, 0.0, 30.0, -26.0, 15.0, -26.0, -15.0};
+  Double[] vertices = {0.0, -1.0, height, -0.5, height, 0.5, 0.0, 1.0, -height, 0.5, -height, -0.5};
+  Double[] scaledVertices = {0.0, -30.0, 26.0, -15.0, 26.0, 15.0, 0.0, 30.0, -26.0, 15.0, -26.0, -15.0};
 
   @Test
   public void zeroZeroEqualsCoordZeroZero() throws Exception {
@@ -109,12 +109,12 @@ public class PointedHexMapTest {
 
   @Test
   public void coordinateExistAndReturnTrue() throws Exception {
-    assertTrue(map.ifMapContains(new Coordinate(0,0)));
+    assertTrue(map.locationExistsOnMap(new Coordinate(0,0)));
   }
 
   @Test
   public void coordinateDoesNotExist() throws Exception {
-    assertFalse(map.ifMapContains(new Coordinate(-1,0)));
+    assertFalse(map.locationExistsOnMap(new Coordinate(-1,0)));
   }
 
   @Test
@@ -129,7 +129,8 @@ public class PointedHexMapTest {
 
   @Test
   public void originVertices() throws Exception {
-    assertTrue(Arrays.equals(vertices, orientation.verticesOf(origin)));
+    Double[] calculated = orientation.verticesOf(origin);
+    assertTrue(Arrays.equals(vertices, calculated));
   }
 
   @Test
