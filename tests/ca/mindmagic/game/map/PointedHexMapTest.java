@@ -3,6 +3,7 @@ package ca.mindmagic.game.map;
 import ca.mindmagic.game.map.grid.Coordinate;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import javafx.geometry.Point2D;
@@ -24,6 +25,7 @@ public class PointedHexMapTest {
     Double[] vertices = {0.0, -1.0, height, -0.5, height, 0.5, 0.0, 1.0, -height, 0.5, -height, -0.5};
     Point2D[] points = {new Point2D(0, -1), new Point2D(height, -0.5)};
     Double[] scaledVertices = {0.0, -30.0, 26.0, -15.0, 26.0, 15.0, 0.0, 30.0, -26.0, 15.0, -26.0, -15.0};
+
 
     @Test
     public void zeroZeroEqualsCoordZeroZero() {
@@ -99,6 +101,23 @@ public class PointedHexMapTest {
     public void centerOfOneOneEquals() {
         Point2D origin = new Point2D(3 * height, 1.5);
         assertEquals(origin, map.centerOf(1, 1));
+    }
+
+    @Test
+    public void setNoWrapNeighborsOfOrigins() {
+        Set<Coordinate> neighbors = new HashSet<Coordinate>();
+        neighbors.add(new Coordinate(0, 1));
+        neighbors.add(new Coordinate(1, 0));
+        assertEquals(neighbors, map.neighborsOf(origin));
+    }
+
+    @Test
+    public void setNoWrapNeighborsOfUpperRightCorner() {
+        Set<Coordinate> neighbors = new HashSet<>();
+        neighbors.add(new Coordinate(0, 2));
+        neighbors.add(new Coordinate(1, 2));
+        neighbors.add(new Coordinate(1, 3));
+        assertEquals(neighbors, map.neighborsOf(new Coordinate(0, 3)));
     }
 
     @Test

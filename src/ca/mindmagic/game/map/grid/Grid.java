@@ -1,9 +1,11 @@
 package ca.mindmagic.game.map.grid;
 
+
+import javafx.geometry.Point2D;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import javafx.geometry.Point2D;
 
 public interface Grid {
 
