@@ -1,10 +1,9 @@
 package ca.mindmagic.game.map.grid;
 
-import ca.mindmagic.game.map.grid.pattern.Shape;
-import ca.mindmagic.game.map.grid.pattern.Square;
-import java.awt.Point;
 import java.util.HashSet;
 import java.util.Set;
+
+import javafx.geometry.Point2D;
 
 public class SquareGrid implements Grid {
 
@@ -17,50 +16,57 @@ public class SquareGrid implements Grid {
 		this.sideLength = sideLength;
 	}
 
-	public Point[] getVertices(Coordinate c){
-		return getVertices(c, sideLength);
+	public Double[] verticesOf(Coordinate c) {
+		return verticesOf(c.getRow(), c.getCol(), sideLength);
 	}
 
-	@Override public Point[] getVertices(int row, int col) {
-		return new Point[0];
+	@Override
+	public Double[] verticesOf(int row, int col) {
+		return verticesOf(row, col, sideLength);
 	}
 
-	@Override public Point getCenterPoint(int x, int y) {
+	@Override
+	public Point2D centerPointOf(int x, int y) {
 		return null;
-	}
+	}  // TODO needs implementing
 
-	public static Point[] getVertices(Coordinate c, int sideLength) {
-		Point[] points = new Point[4];
-		points[0] = topLeft(c, sideLength);
-		points[1] = topRight(c, sideLength);
-		points[2] = bottomLeft(c, sideLength);
-		points[3] = bottomRight(c, sideLength);
-		
-		return points;
+	public static Double[] verticesOf(int row, int col, int sideLength) {
+		Point2D topLeft = topLeft(row, col, sideLength);
+		Point2D topRight = topRight(row, col, sideLength);
+		Point2D bottomLeft = bottomLeft(row, col, sideLength);
+		Point2D bottomRight = bottomRight(row, col, sideLength);
+		Double[] vertices = {topLeft.getX(), topLeft.getY(), topRight.getX(), topRight.getY(),
+				bottomLeft.getX(), bottomLeft.getY(), bottomRight.getX(), bottomRight.getX()};
+		return vertices;
 	}
 
 	public int getSideLength(){
 		return sideLength;
 	}
 
-	public static Point getCenterPoint(Coordinate c, int sideLength) {
-		Point p = topLeft(c, sideLength);
+	public static Point2D centerPointOf(Coordinate c, int sideLength) {
+		Point2D p = topLeft(c.getRow(), c.getCol(), sideLength);
 		int halfOfSide = sideLength/2;
-		return new Point(p.x+halfOfSide, p.y + halfOfSide);
+		return new Point2D(p.getX() + halfOfSide, p.getY() + halfOfSide);
 	}
 
 	@Override
 	public Set<Coordinate> neighborsOf(Coordinate c) {
+		return neighborsOf(c.getRow(), c.getCol());
+	}
+
+	@Override
+	public Set<Coordinate> neighborsOf(int row, int col) {
 		Set<Coordinate> neighbors = new HashSet<>();
-		neighbors.add(new Coordinate(c.getRow()+1, c.getCol()));
-		neighbors.add(new Coordinate(c.getRow(), c.getCol()+1));
-		neighbors.add(new Coordinate(c.getRow()-1, c.getCol()));
-		neighbors.add(new Coordinate(c.getRow(), c.getCol()-1));
+		neighbors.add(new Coordinate(row + 1, col));
+		neighbors.add(new Coordinate(row, col + 1));
+		neighbors.add(new Coordinate(row - 1, col));
+		neighbors.add(new Coordinate(row, col - 1));
 		if (diagonalIsAdjacent){
-			neighbors.add(new Coordinate(c.getRow()+1, c.getCol()+1));
-			neighbors.add(new Coordinate(c.getRow()-1, c.getCol()+1));
-			neighbors.add(new Coordinate(c.getRow()+1, c.getCol()-1));
-			neighbors.add(new Coordinate(c.getRow()-1, c.getCol()-1));
+			neighbors.add(new Coordinate(row + 1, col + 1));
+			neighbors.add(new Coordinate(row - 1, col + 1));
+			neighbors.add(new Coordinate(row + 1, col - 1));
+			neighbors.add(new Coordinate(row - 1, col - 1));
 		}
 		return neighbors;
 	}
@@ -73,20 +79,20 @@ public class SquareGrid implements Grid {
 		return range;
 	}
 
-  private static Point bottomRight(Coordinate c, int sideLength) {
-    return new Point((c.getRow()+1)*sideLength, (c.getCol()+1)*sideLength);
+	private static Point2D bottomRight(int row, int col, int sideLength) {
+		return new Point2D((row + 1) * sideLength, (col + 1) * sideLength);
   }
 
-  private static Point bottomLeft(Coordinate c, int sideLength) {
-    return new Point(c.getRow() *sideLength, (c.getCol()+1)*sideLength);
+	private static Point2D bottomLeft(int row, int col, int sideLength) {
+		return new Point2D(row * sideLength, (col + 1) * sideLength);
   }
 
-  private static Point topRight(Coordinate c, int sideLength) {
-    return new Point((c.getRow()+1)*sideLength, c.getCol()*sideLength);
+	private static Point2D topRight(int row, int col, int sideLength) {
+		return new Point2D((row + 1) * sideLength, col * sideLength);
   }
 
-  private static Point topLeft(Coordinate c, int sideLength) {
-    return new Point(c.getCol()*sideLength, c.getRow() *sideLength);
+	private static Point2D topLeft(int row, int col, int sideLength) {
+		return new Point2D(row * sideLength, col * sideLength);
   }
 
 }

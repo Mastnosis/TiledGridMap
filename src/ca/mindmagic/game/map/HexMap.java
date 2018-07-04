@@ -28,10 +28,8 @@ package ca.mindmagic.game.map;
  */
 
 import ca.mindmagic.game.map.grid.Coordinate;
-import ca.mindmagic.game.map.grid.Grid;
 import ca.mindmagic.game.map.grid.HexGrid;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -39,12 +37,12 @@ import java.util.function.IntBinaryOperator;
 import java.util.function.ToDoubleBiFunction;
 import java.util.stream.Collectors;
 
+import javafx.geometry.Point2D;
+
 public class HexMap extends GridMap{
 
   final Orientation orientation;
 
-  protected final boolean wrapWidth;
-  protected final boolean wrapHeight;
   Map<Coordinate, Set<Coordinate>> locations;
 
   public HexMap(int height, int width) {
@@ -55,13 +53,11 @@ public class HexMap extends GridMap{
     this(height, width, false, false, orientation);
   }
 
-  public HexMap(int height, int width, boolean wrapWidth, boolean wrapHeight, Orientation orientation){
-    super(height, width, new HexGrid());
+  public HexMap(int height, int width, boolean wrapHeight, boolean wrapWidth, Orientation orientation) {
+    super(new HexGrid(), height, width, wrapHeight, wrapWidth);
     this.orientation = orientation;
     this.width = width;
     this.height = height;
-    this.wrapWidth = wrapWidth;
-    this.wrapHeight = wrapHeight;
 
     locations = new HashMap<>();
     for (int i = 0; i < height; i++) {
@@ -74,10 +70,6 @@ public class HexMap extends GridMap{
   }
 
   public Set<Coordinate> neighborsOf(Coordinate mapLocation){
-    //if(locations.containsKey(mapLocation)){
-    //  return locations.get(mapLocation);
-    //}
-    //return Collections.emptySet();
     return calcNeighborsOf(mapLocation);
   }
 
@@ -97,15 +89,7 @@ public class HexMap extends GridMap{
         .map(this.orientation::mapCoordinateOf)
         .filter(this::locationExistsOnMap)
         .collect(Collectors.toSet());
-    //if(wrapHeight){
-    //  if(0 == mapRow){
-    //
-    //  }
-    //  if(height - 1 == mapRow){
-    //
-    //  }
-    //}
-    if(wrapWidth && orientation == Orientation.POINTED_TOP){
+    if (wrapHorizontal && orientation == Orientation.POINTED_TOP) {
       if (mapCol == 0) {
         for (Coordinate gc : grid.neighborsOf(orientation.gridCoordinateOf(mapRow, mapCol))) {
           Coordinate mc = gridToMapCoordinate(gc);
@@ -141,44 +125,33 @@ public class HexMap extends GridMap{
     return locations.keySet();
   }
 
-  @Override protected Coordinate mapToGridCoordinate(Coordinate c) {
-    return orientation.gridCoordinateOf(c);
-  }
-
-  @Override protected Coordinate gridToMapCoordinate(Coordinate c) {
-    return orientation.mapCoordinateOf(c);
-  }
-
-  @Deprecated
-  public Coordinate coordinateOf(int row, int col){
+  @Override
+  protected Coordinate mapToGridCoordinate(int row, int col) {
     return orientation.gridCoordinateOf(row, col);
   }
 
-
-
-  public Double[] verticesOf(Coordinate c){
-    return orientation.verticesOf(c);
+  @Override
+  protected Coordinate gridToMapCoordinate(int xAxis, int yAxis) {
+    return orientation.mapCoordinateOf(xAxis, yAxis);
   }
 
+  @Override
   public Double[] verticesOf(int row, int col){
-    return verticesOf(row, col, orientation);
+    return orientation.verticesOf(row, col);
   }
 
   public static Double[] verticesOf(int row, int col, Orientation orientation){
     return orientation.verticesOf(row, col);
   }
 
-  public Double[] centerOf(Coordinate coordinate){
-    return centerOf(coordinate.getRow(), coordinate.getCol());
-  }
-
-  public Double[] centerOf(int row, int col){
+  @Override
+  public Point2D centerOf(int row, int col) {
     return orientation.centerOf(row, col);
   }
 
   /**
    * Orientation - for a square map, there are two primary orientations for a hex grid; either
-   * pointed top or flat top. These alter the calculation of row and column indexes as well as the points of the
+   * pointed top or flat top. These alter the calculation of row and column indexes as well as the
    * hexagon vertices.
    */
 
@@ -257,14 +230,14 @@ public class HexMap extends GridMap{
       );
     }
 
-    Double[] centerOf(int mapRow, int mapCol){
+    Point2D centerOf(int mapRow, int mapCol) {
       double x,y;
       x = findCenterX.applyAsDouble(mapRow,mapCol);
       y = findCenterY.applyAsDouble(mapRow,mapCol);
-      return new Double[]{x,y};
+      return new Point2D(x, y);
     }
 
-    Double[] centerOf(Coordinate coordinate){
+    Point2D centerOf(Coordinate coordinate) {
       return centerOf(coordinate.getRow(), coordinate.getCol());
     }
 
@@ -273,18 +246,21 @@ public class HexMap extends GridMap{
     }
 
     Double[] verticesOf(int mapRow, int mapCol){
-      double[] xValues = Arrays.stream(this.xValues).map(x -> x+centerOf(mapRow, mapCol)[0]).toArray();
-      double[] yValues = Arrays.stream(this.yValues).map(y -> y+centerOf(mapRow, mapCol)[1]).toArray();
-      Double[] vertices = new Double[12];
-      for (int i = 0; i < 6; i++){
-        vertices[i*2] = xValues[i];
-        vertices[i*2+1] = yValues[i];
+      Point2D center = centerOf(mapRow, mapCol);
+      double[] xValues = Arrays.stream(this.xValues).map(x -> x + center.getX()).toArray();
+      double[] yValues = Arrays.stream(this.yValues).map(y -> y + center.getY()).toArray();
+      int points = 6;
+      Double[] vertices = new Double[points * 2];
+      for (int i = 0; i < points; i++) {
+        int index = i * 2;
+        vertices[index] = xValues[i];
+        vertices[index + 1] = yValues[i];
       }
       return vertices;
     }
 
     public Double[] verticesOf(int mapRow, int mapCol, int sideLength){
-      return Arrays.stream(verticesOf(mapRow, mapCol)).map(x -> Math.rint(x*sideLength)).toArray(Double[]::new);
+      return Arrays.stream(verticesOf(mapRow, mapCol)).map(d -> (d * sideLength)).toArray(Double[]::new);
     }
 
     public Double[] verticesOf(Coordinate location, int sideLength){
@@ -292,5 +268,4 @@ public class HexMap extends GridMap{
     }
 
   }
-
 }

@@ -1,10 +1,10 @@
 package ca.mindmagic.game.map.grid;
 
 import ca.mindmagic.game.map.grid.pattern.Hexagon;
-import java.awt.Point;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javafx.geometry.Point2D;
 
 public class HexGrid implements Grid{
 
@@ -19,6 +19,7 @@ public class HexGrid implements Grid{
 			this.row = row;
 			this.col = col;
 		}
+
 		Coordinate move(Coordinate start){
 			return new Coordinate(start.getRow() + row, start.getCol() + col);
 		}
@@ -35,16 +36,10 @@ public class HexGrid implements Grid{
 
 	@Override
 	public Set<Coordinate> neighborsOf(Coordinate hex) {
-		Set<Coordinate> neighbors = new LinkedHashSet<>();
-		neighbors.add(new Coordinate(hex.getRow() -1,hex.getCol()));
-		neighbors.add(new Coordinate(hex.getRow(), hex.getCol()+1));
-		neighbors.add(new Coordinate(hex.getRow() +1, hex.getCol()+1));
-		neighbors.add(new Coordinate(hex.getRow() +1, hex.getCol()));
-		neighbors.add(new Coordinate(hex.getRow(), hex.getCol()-1));
-		neighbors.add(new Coordinate(hex.getRow() -1, hex.getCol()-1));
-		return neighbors;
+		return neighborsOf(hex.getRow(), hex.getCol());
 	}
 
+	@Override
 	public Set<Coordinate> neighborsOf(int row, int col){
 		Set<Coordinate> neighbors = new LinkedHashSet<>();
 		neighbors.add(new Coordinate(row -1,col));
@@ -56,43 +51,34 @@ public class HexGrid implements Grid{
 		return neighbors;
 	}
 
-
 	@Override
 	public int range(Coordinate source, Coordinate target) {
 		return range(source.getRow(), source.getCol(), target.getRow(), target.getCol());
 	}
 
-  @Override public Point[] getVertices(int row, int col) {
-    return new Point[0];
+	@Override
+	public Double[] verticesOf(int row, int col) {
+		return verticesOf(row, col, sideLength);
+	}
+
+	public static Double[] verticesOf(int row, int col, int sideLength) {
+		Double[] vertices = new Double[12];
+		// TODO requires implementation
+		return vertices;
   }
 
-  @Override public Point getCenterPoint(int x, int y) {
-    return getCenterPoint(x, y, sideLength);
+	@Override
+	public Point2D centerPointOf(int x, int y) {
+		return centerPointOf(x, y, sideLength);
   }
 
-  /**
-   * Convert from a square column format to an axial column format
-   * 0 1 2		0 1 2
-   *  0 1	2		 1 2 3
-   * 0 1 2		1 2 3
-   *
-   * @return column number converted to axial value
-   */
-  //private int convertColToAxial(Koordinate c){
-  //	return (int)(c.getCol() + Math.ceil(c.row/2.0));
-  //}
 
-  //@Override
-  //public Point getCenterPoint(int row, int col) {
-  //	return getCenterPoint(row, col, hex.lengthOfSides());
-  //}
-  //
-  public static Point getCenterPoint(int row, int col, int size){
-    int hexWidth = 2*(int)(size* Hexagon.HEIGHT);
+	public static Point2D centerPointOf(int row, int col, int sidelength) {
+		int hexWidth = 2 * (int) (sidelength * Hexagon.HEIGHT);
     int oddRowOffset = row%2 * hexWidth/2;
     int centerPointX = col * hexWidth + oddRowOffset;
-    int centerPointY = (int)(row * 1.5 * size);
-    return new Point(centerPointX, centerPointY);
+		int centerPointY = (int) (row * 1.5 * sidelength);
+		return new Point2D(centerPointX, centerPointY);
   }
 
   private static int range(int row1, int col1, int row2, int col2){

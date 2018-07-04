@@ -3,6 +3,8 @@ package ca.mindmagic.game.map;
 import ca.mindmagic.game.map.grid.Coordinate;
 import java.util.Arrays;
 import java.util.Set;
+
+import javafx.geometry.Point2D;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,6 +15,9 @@ public class FlatHexMapTest {
   double height = Math.sqrt(0.75);
 
   Double[] vertices = {-0.5, -height, 0.5, -height, 1.0, 0.0, 0.5, height, -0.5, height, -1.0, 0.0};
+  Point2D[] points = {new Point2D(-0.5, -height), new Point2D(0.5, -height),
+          new Point2D(1.0, 0), new Point2D(0.5, height), new Point2D(-0.5, height),
+          new Point2D(-1, 0)};
 
   Coordinate origin = new Coordinate(0,0);
   Coordinate positiveQuadrant = new Coordinate(5,4);
@@ -21,72 +26,72 @@ public class FlatHexMapTest {
   Coordinate posNegQuadrant = new Coordinate(1,-4);
 
   @Test
-  public void zeroZeroEqualsCoordZeroZero() throws Exception {
+  public void zeroZeroEqualsCoordZeroZero() {
     assertEquals(new Coordinate(0,0), gridCoordinateOf(0,0));
     //assertEquals(new Koordinate(0,0), map.coordinateOf(0,0));
   }
 
   @Test
-  public void zeroOneEqualsCoordOneOne() throws Exception {
+  public void zeroOneEqualsCoordOneOne() {
     assertEquals(new Coordinate(1, 1), gridCoordinateOf(0,1));
   }
 
   @Test
-  public void zeroTwoEqualsCoordOneTwo() throws Exception {
+  public void zeroTwoEqualsCoordOneTwo() {
     assertEquals(new Coordinate(1,2), gridCoordinateOf(0,2));
   }
 
   @Test
-  public void twoZeroEqualsCoordTwoZero() throws Exception {
+  public void twoZeroEqualsCoordTwoZero() {
     assertEquals(new Coordinate(2,0), gridCoordinateOf(2,0));
   }
   @Test
-  public void oneOneEqualsCoordTwoOne() throws Exception {
+  public void oneOneEqualsCoordTwoOne() {
     assertEquals(new Coordinate(2,1), gridCoordinateOf(1,1));
   }
 
   @Test
-  public void centerOfZeroZeroEqualsZeroZero() throws Exception {
+  public void centerOfZeroZeroEqualsZeroZero() {
     double expectedX = 0.0;
     double expectedY = 0.0;
-    assertEquals(expectedX, map.centerOf(0,0)[0], 0.0);
-    assertEquals(expectedY, map.centerOf(0,0)[1], 0.0);
+    Point2D expected = new Point2D(expectedX, expectedY);
+    assertEquals(expected, map.centerOf(0, 0));
   }
 
   @Test
-  public void centerOfOneZeroEquals() throws Exception {
+  public void centerOfOneZeroEquals() {
     double expectedX = 0;
     double expectedY = 2.0*height;
-    assertEquals(expectedX, map.centerOf(1,0)[0], 0.0);
-    assertEquals(expectedY, map.centerOf(1,0)[1], 0.0);
+    Point2D expected = new Point2D(expectedX, expectedY);
+    assertEquals(expected, map.centerOf(1, 0));
   }
 
   @Test
-  public void centerOfTwoZeroEquals() throws Exception {
+  public void centerOfTwoZeroEquals() {
     double expectedX = 0;
     double expectedY = 4.0*height;
-    assertEquals(expectedX, map.centerOf(2,0)[0], 0.0);
-    assertEquals(expectedY, map.centerOf(2,0)[1], 0.0);
+    Point2D expected = new Point2D(expectedX, expectedY);
+    assertEquals(expected, map.centerOf(2, 0));
   }
 
   @Test
-  public void centerOfZeroOneEquals() throws Exception {
+  public void centerOfZeroOneEquals() {
     double expectedX = 1.5;
     double expectedY = height;
-    assertEquals(expectedX, map.centerOf(0,1)[0], 0.0);
-    assertEquals(expectedY, map.centerOf(0,1)[1], 0.0);
+    Point2D expected = new Point2D(expectedX, expectedY);
+    assertEquals(expected, map.centerOf(0, 1));
   }
 
   @Test
-  public void centerOfZeroTwoEquals() throws Exception {
+  public void centerOfZeroTwoEquals() {
     double expectedX = 3.0;
     double expectedY = 0.0;
-    assertEquals(expectedX, map.centerOf(0,2)[0], 0.0);
-    assertEquals(expectedY, map.centerOf(0,2)[1], 0.0);
+    Point2D expected = new Point2D(expectedX, expectedY);
+    assertEquals(expected, map.centerOf(0, 2));
   }
 
   @Test
-  public void conversionIsSymmetric() throws Exception {
+  public void conversionIsSymmetric() {
     testConversionSymmetry(origin);
     testConversionSymmetry(positiveQuadrant);
     testConversionSymmetry(negativeQuadrant);
@@ -95,17 +100,18 @@ public class FlatHexMapTest {
   }
 
   @Test
-  public void originVertices() throws Exception {
+  public void originVertices() {
     assertTrue(Arrays.equals(vertices, orientation.verticesOf(origin)));
+    //assertEquals(points, orientation.verticesOf(origin));
   }
 
   @Test
-  public void origin_has_two_neighbors() throws Exception {
+  public void origin_has_two_neighbors() {
     assertEquals(2, map.neighborsOf(0,0).size());
   }
 
   @Test
-  public void non_edge_hex_has_six_neighbors() throws Exception {
+  public void non_edge_hex_has_six_neighbors() {
     assertEquals(6, map.neighborsOf(1,1).size());
   }
 
