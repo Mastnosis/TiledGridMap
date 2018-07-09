@@ -1,7 +1,7 @@
-package ca.mindmagic.game.map
+package ca.mindmagic.game.map.tile
 
 import ca.mindmagic.game.map.grid.Coordinate
-import ca.mindmagic.game.map.tile.Tile
+import ca.mindmagic.game.map.grid.GridMap
 import java.util.function.Supplier
 
 class GenericMap<T : Tile?>(val gridMap: GridMap, type: Supplier<T>) {

@@ -1,5 +1,7 @@
-package ca.mindmagic.game.map.grid;
+package ca.mindmagic.game.map.grid.hex;
 
+import ca.mindmagic.game.map.grid.Coordinate;
+import ca.mindmagic.game.map.grid.hex.HexGrid;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

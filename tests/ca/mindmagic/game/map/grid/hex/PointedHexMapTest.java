@@ -1,4 +1,4 @@
-package ca.mindmagic.game.map;
+package ca.mindmagic.game.map.grid.hex;
 
 import ca.mindmagic.game.map.grid.Coordinate;
 
@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import ca.mindmagic.game.map.grid.hex.HexMap;
 import javafx.geometry.Point2D;
 import org.junit.Test;
 
@@ -170,21 +171,21 @@ public class PointedHexMapTest {
     public void horiz_wrapped_map_origin_has_four_neighbors() {
         HexMap wrappedMap = new HexMap(5, 5, false, true, pointedTop);
         Set<Coordinate> neighbors = wrappedMap.neighborsOf(0, 0);
-        assertTrue(neighbors.size() == 4);
+        assertEquals(4, neighbors.size());
     }
 
     @Test
     public void horiz_wrapped_map_one_zero_has_six_neighbors() {
         HexMap wrappedMap = new HexMap(5, 5, false, true, pointedTop);
         Set<Coordinate> neighbors = wrappedMap.neighborsOf(1, 0);
-        assertTrue(neighbors.size() == 6);
+        assertEquals(6, neighbors.size());
     }
 
     @Test
     public void area_around_origin_range_one_wrapped_horizontal() {
         HexMap wrappedMap = new HexMap(5, 5, false, true, pointedTop);
         Set<Coordinate> area = wrappedMap.getArea(0, 0, 1);
-        assertTrue(area.size() == 5);
+        assertEquals(5, area.size());
         assertTrue(area.contains(origin));
         assertTrue(area.contains(new Coordinate(0, 1)));
         assertTrue(area.contains(new Coordinate(1, 0)));
@@ -196,7 +197,7 @@ public class PointedHexMapTest {
     public void area_around_origin_range_two_wrapped_horizontal() {
         HexMap wrappedMap = new HexMap(5, 5, false, true, pointedTop);
         Set<Coordinate> area = wrappedMap.getArea(0, 0, 2);
-        assertTrue(area.size() == 12);
+        assertEquals(12, area.size());
     }
 
     @Test

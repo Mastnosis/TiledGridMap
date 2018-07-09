@@ -1,12 +1,14 @@
-package ca.mindmagic.game.map.grid;
+package ca.mindmagic.game.map.grid.hex;
 
+import ca.mindmagic.game.map.grid.Coordinate;
+import ca.mindmagic.game.map.grid.Grid;
 import ca.mindmagic.game.map.grid.pattern.Hexagon;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javafx.geometry.Point2D;
 
-public class HexGrid implements Grid{
+public class HexGrid implements Grid {
 
   private final int sideLength;
 

@@ -1,8 +1,10 @@
-package ca.mindmagic.game.map.grid;
+package ca.mindmagic.game.map.grid.square;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import ca.mindmagic.game.map.grid.Coordinate;
+import ca.mindmagic.game.map.grid.Grid;
 import javafx.geometry.Point2D;
 
 public class SquareGrid implements Grid {

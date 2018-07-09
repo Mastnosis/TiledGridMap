@@ -1,9 +1,10 @@
-package ca.mindmagic.game.map;
+package ca.mindmagic.game.map.grid.hex;
 
 import ca.mindmagic.game.map.grid.Coordinate;
 import java.util.Arrays;
 import java.util.Set;
 
+import ca.mindmagic.game.map.grid.hex.HexMap;
 import javafx.geometry.Point2D;
 import org.junit.Test;
 

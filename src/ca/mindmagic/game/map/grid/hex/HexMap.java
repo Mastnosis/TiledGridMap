@@ -1,34 +1,35 @@
-package ca.mindmagic.game.map;
+package ca.mindmagic.game.map.grid.hex;
 
-/**
- * 	 _   _   _
- *	/ \_/ \_/ \
- *  \_/ \_/ \_/
- *  / \_/ \_/ \
- *  \_/ \_/ \_/
- *  / \_/ \_/ \
- *
- *  rows and columns based on pointed orientation below or flat orientation as above
- *
- *   /\  /\  /\  /\  /\  /\   Y
- *  /  \/  \/  \/  \/  \/  \
- *  |   |   |   |   |   |   |
- *  |X0 | 1 | 2 |   |   |   | 0
- *  \  /\  /\  /\  /\  /\  /
- *   \/  \/  \/  \/  \/  \/
- *    |   |   |   |   |   |
- *    | 0 | 1 | 2 |   |   |   1
- *   /\  /\  /\  /\  /\  /\
- *  /  \/  \/  \/  \/  \/  \
- *  |   |   |   |   |   |   |
- *  | 0 | 1 | 2 |   |   |   | 2
- *  \  /\  /\  /\  /\  /\  /
- *   \/  \/  \/  \/  \/  \/
- *
+/*
+  	 _   _   _
+ 	/ \_/ \_/ \
+   \_/ \_/ \_/
+   / \_/ \_/ \
+   \_/ \_/ \_/
+   / \_/ \_/ \
+
+   rows and columns based on pointed orientation below or flat orientation as above
+
+    /\  /\  /\  /\  /\  /\   Y
+   /  \/  \/  \/  \/  \/  \
+   |   |   |   |   |   |   |
+   |X0 | 1 | 2 |   |   |   | 0
+   \  /\  /\  /\  /\  /\  /
+    \/  \/  \/  \/  \/  \/
+     |   |   |   |   |   |
+     | 0 | 1 | 2 |   |   |   1
+    /\  /\  /\  /\  /\  /\
+   /  \/  \/  \/  \/  \/  \
+   |   |   |   |   |   |   |
+   | 0 | 1 | 2 |   |   |   | 2
+   \  /\  /\  /\  /\  /\  /
+    \/  \/  \/  \/  \/  \/
+
  */
 
 import ca.mindmagic.game.map.grid.Coordinate;
-import ca.mindmagic.game.map.grid.HexGrid;
+import ca.mindmagic.game.map.grid.GridMap;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
 
 import javafx.geometry.Point2D;
 
-public class HexMap extends GridMap{
+public class HexMap extends GridMap {
 
   final Orientation orientation;
 

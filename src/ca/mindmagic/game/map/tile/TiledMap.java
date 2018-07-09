@@ -1,4 +1,4 @@
-package ca.mindmagic.game.map;
+package ca.mindmagic.game.map.tile;
 
 import ca.mindmagic.game.map.grid.Grid;
 import ca.mindmagic.game.map.grid.Coordinate;
