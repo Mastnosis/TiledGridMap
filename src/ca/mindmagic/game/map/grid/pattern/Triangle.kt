@@ -1,28 +1,27 @@
 package ca.mindmagic.game.map.grid.pattern
 
-import java.awt.Point
+import javafx.geometry.Point2D
 
-class Triangle : Shape {
+class Triangle(sidelength: Double) : Shape(sidelength) {
 
-    override val vertices: Array<Point>
-        get() = getVertices(sideLength)
 
-    constructor() : super() {}
-
-    constructor(sideLength: Int) : super(sideLength) {}
 
     override fun numberOfSides(): Int {
         return 3
     }
 
+    override fun getVertices(): Array<Point2D> {
+        return getVertices(sideLength)
+    }
+
     companion object {
 
-        fun getVertices(sidelength: Int): Array<Point> {
-            val vertices = arrayOfNulls<Point>(3)
-            vertices[0] = Point()  // TODO create the appropriate points
-            vertices[1] = Point()
-            vertices[2] = Point()
-            return vertices
+        fun getVertices(sidelength: Double): Array<Point2D> {
+            return arrayOf(
+                    Point2D(0.0, 0.0),
+                    Point2D(0.0, 0.0),
+                    Point2D(0.0, 0.0)
+            )
         }
     }
 }
