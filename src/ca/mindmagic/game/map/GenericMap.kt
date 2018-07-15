@@ -1,7 +1,8 @@
-package ca.mindmagic.game.map.tile
+package ca.mindmagic.game.map
 
 import ca.mindmagic.game.map.grid.Coordinate
 import ca.mindmagic.game.map.grid.GridMap
+import ca.mindmagic.game.map.tile.Tile
 import java.util.function.Supplier
 
 class GenericMap<T : Tile?>(val gridMap: GridMap, type: Supplier<T>) {
@@ -14,9 +15,9 @@ class GenericMap<T : Tile?>(val gridMap: GridMap, type: Supplier<T>) {
     }
 
     fun neighborsOf(tile: T): Set<T> {
-        if (!tiles.contains(tile)) return emptySet()
+        return if (!tiles.contains(tile)) emptySet()
         else {
-            return gridMap.neighborsOf(coordinateOf(tile)).map { getTile(it) }.toSet()
+            gridMap.neighborsOf(coordinateOf(tile)).map { getTile(it) }.toSet()
         }
     }
 
@@ -33,5 +34,10 @@ class GenericMap<T : Tile?>(val gridMap: GridMap, type: Supplier<T>) {
 
     fun area(center: T, radius: Int): Set<T> {
         return gridMap.getArea(coordinateOf(center), radius).map { getTile(it) }.toSet()
+    }
+
+    fun ring(center: T, radius: Int): Set<T> {
+        return gridMap.ring(coordinateOf(center), radius)
+                .map { getTile(it) }.toSet()
     }
 }
