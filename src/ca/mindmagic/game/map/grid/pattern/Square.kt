@@ -5,7 +5,6 @@ import javafx.geometry.Point2D
 class Square(sideLength: Double) : Shape(sideLength) {
 
 
-
     override fun numberOfSides(): Int {
         return 4
     }
@@ -19,11 +18,17 @@ class Square(sideLength: Double) : Shape(sideLength) {
         fun getVertices(sideLength: Double): Array<Point2D> {
             val half = sideLength / 2.0
             return arrayOf(
-                    Point2D(-half, -half),
-                    Point2D(half, -half),
-                    Point2D(half, half),
-                    Point2D(-half, half))
+                    topLeft(half),
+                    topRight(half),
+                    bottomRight(half),
+                    bottomLeft(half)
+            )
 
         }
+
+        private fun topLeft(half: Double) = Point2D(-half, -half)
+        private fun topRight(half: Double) = Point2D(half, -half)
+        private fun bottomRight(half: Double) = Point2D(half, half)
+        private fun bottomLeft(half: Double) = Point2D(-half, half)
     }
 }
