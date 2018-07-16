@@ -9,10 +9,10 @@ import javafx.geometry.Point2D
 
 class HexGrid @JvmOverloads constructor(private val sideLength: Int = 60) : Grid {
 
-    enum class Direction private constructor(private val row: Int, private val col: Int) {
+    enum class Direction constructor(private val row: Int, private val col: Int) {
         A(-1, 0), B(0, 1), C(1, 1), D(1, 0), E(0, -1), F(-1, -1);
 
-        internal fun move(start: Coordinate): Coordinate {
+        fun move(start: Coordinate): Coordinate {
             return Coordinate(start.row + row, start.col + col)
         }
 

@@ -49,10 +49,10 @@ class SquareGrid(sideLength: Int) : Grid {
         return neighbors
     }
 
-    override fun range(c1: Coordinate, c2: Coordinate): Int {
+    override fun range(source: Coordinate, target: Coordinate): Int {
         var range = 0
-        range += Math.abs(c1.col - c2.col)
-        range += Math.abs(c1.row - c2.row)
+        range += Math.abs(source.col - target.col)
+        range += Math.abs(source.row - target.row)
         return range
     }
 

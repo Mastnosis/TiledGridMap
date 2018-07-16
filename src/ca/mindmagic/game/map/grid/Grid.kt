@@ -3,8 +3,6 @@ package ca.mindmagic.game.map.grid
 
 import javafx.geometry.Point2D
 
-import java.util.HashSet
-
 
 interface Grid {
 
@@ -25,45 +23,42 @@ interface Grid {
      * @param radius the range from the center
      * @return all the coordinates within the radius of the center
      */
-    fun getArea(center: Coordinate, radius: Int): MutableSet<Coordinate> {
-        val results = HashSet<Coordinate>()
-        if (radius < 0) {
-            // do nothing
+    fun area(center: Coordinate, radius: Int): Set<Coordinate> {
+        if (radius < 0 || !contains(center)) {
+            return emptySet<Coordinate>()
         } else if (radius == 0) {
-            results.add(center)
+            return setOf(center)
         } else {
-            val intermediate = getArea(center, radius - 1)
-            results.addAll(intermediate)
-            for (cd in intermediate) {
-                results.addAll(neighborsOf(cd))
-            }
+            val area = area(center, radius - 1)
+            return area.plus(area.flatMap { neighborsOf(it) })
         }
-        return results
     }
 
-    fun getArea(row: Int, col: Int, radius: Int): Set<Coordinate> {
-        return getArea(Coordinate(row, col), radius)
+    fun area(row: Int, col: Int, radius: Int): Set<Coordinate> {
+        return area(Coordinate(row, col), radius)
+    }
+
+    fun contains(coordinate: Coordinate): Boolean {
+        return true
     }
 
     /**
      * Returns all coordinates at the specified radius. Locations
      * within that radius are excluded.
      */
-    fun ring(c: Coordinate, radius: Int): Set<Coordinate> {
-        val set = getArea(c, radius)
-        set.removeAll(getArea(c, radius - 1))
-        return set
+    fun ring(center: Coordinate, radius: Int): Set<Coordinate> {
+        return area(center, radius).minus(area(center, radius - 1))
     }
 
     /**
-     * the shortest number of adjacent hops from the first coordinate to the second,
+     * the shortest number of adjacent hops from the source coordinate to the target,
      * not counting the first but counting the last. Adjacent coordinates would be range one.
      * A coordinate and itself would be range zero.
-     * @param c1 the first coordinate
-     * @param c2 the second coordinate
-     * @return number of hops from c1 to c2
+     * @param source the first coordinate
+     * @param target the second coordinate
+     * @return number of hops from source to target
      */
-    fun range(c1: Coordinate, c2: Coordinate): Int
+    fun range(source: Coordinate, target: Coordinate): Int
 
     /**
      * The angle from the center of the starting location to the center of the target location.
@@ -76,10 +71,10 @@ interface Grid {
     fun angleOf(origin: Coordinate, target: Coordinate): Double {
         val a = centerPointOf(origin)
         val b = centerPointOf(target)
-        return a.angle(centerPointOf(origin.row, origin.col + 1), b)
+        return a.angle(a.add(1.0, 0.0), b)
     }
 
-    open fun verticesOf(c: Coordinate): Array<Double> {
+    fun verticesOf(c: Coordinate): Array<Double> {
         return verticesOf(c.row, c.col)
     }
 

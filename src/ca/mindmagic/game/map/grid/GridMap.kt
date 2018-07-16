@@ -1,7 +1,5 @@
 package ca.mindmagic.game.map.grid
 
-import java.util.stream.Collectors
-
 import javafx.geometry.Point2D
 
 abstract class GridMap(protected var grid: Grid,
@@ -41,7 +39,7 @@ abstract class GridMap(protected var grid: Grid,
     }
 
     fun getArea(row: Int, col: Int, radius: Int): Set<Coordinate> {
-        val area = grid.getArea(mapToGridCoordinate(row, col), radius)
+        val area = grid.area(mapToGridCoordinate(row, col), radius)
                 .map { this.gridToMapCoordinate(it) }
                 .filter { locationExistsOnMap(it) }
                 .toSet()

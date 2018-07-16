@@ -2,7 +2,6 @@ package ca.mindmagic.game.map.tile
 
 import ca.mindmagic.game.map.grid.Grid
 import ca.mindmagic.game.map.grid.Coordinate
-import ca.mindmagic.game.map.tile.Tile
 import java.util.ArrayList
 import java.util.HashSet
 
@@ -22,16 +21,16 @@ class TiledMap @JvmOverloads constructor(protected var grid: Grid, protected var
 
     fun getAllTilesInRange(center: Coordinate, range: Int): Set<Tile> {
         val inRange = HashSet<Tile>()
-        for (c in grid.getArea(center, range)) {
-            if (getTile(c) == null) continue
-            inRange.add(getTile(c))
+        for (c in grid.area(center, range)) {
+            val tile = getTile(c) ?: continue
+            inRange.add(tile)
         }
         return inRange
     }
 
     private fun initTiles() {
         for (index in tiles.indices) {
-            tiles.add(Tile())
+//            tiles.add(Tile())
         }
         for (tile in tiles) {
             addAllNeighbors(tile)

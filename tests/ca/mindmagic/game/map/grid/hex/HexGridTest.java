@@ -1,10 +1,7 @@
 package ca.mindmagic.game.map.grid.hex;
 
 import ca.mindmagic.game.map.grid.Coordinate;
-import ca.mindmagic.game.map.grid.hex.HexGrid;
 import org.junit.Test;
-
-import java.awt.*;
 
 import static org.junit.Assert.*;
 
@@ -95,32 +92,32 @@ public class HexGridTest {
 
     @Test
     public void number_of_neighbors_radius_neg_equal_to_zero() {
-        assertEquals(0, grid.getArea(origin, -1).size());
-        assertEquals(0, grid.getArea(positiveQuadrant, -1).size());
-        assertEquals(0, grid.getArea(negativeQuadrant, -1).size());
-        assertEquals(0, grid.getArea(negPosQuadrant, -1).size());
+        assertEquals(0, grid.area(origin, -1).size());
+        assertEquals(0, grid.area(positiveQuadrant, -1).size());
+        assertEquals(0, grid.area(negativeQuadrant, -1).size());
+        assertEquals(0, grid.area(negPosQuadrant, -1).size());
     }
 
     ////////// AREA /////////////
 
     @Test
     public void number_of_hexes_in_area_radius_0_equal_to_one() {
-        assertEquals(1, grid.getArea(new Coordinate(0, 0), 0).size());
+        assertEquals(1, grid.area(new Coordinate(0, 0), 0).size());
     }
 
     @Test
     public void number_of_hexes_in_area_radius_negative_equal_to_zero() {
-        assertEquals(0, grid.getArea(new Coordinate(0, 0), -1).size());
+        assertEquals(0, grid.area(new Coordinate(0, 0), -1).size());
     }
 
     @Test
     public void number_of_hexes_in_area_radius_1_equal_to_seven() {
-        assertEquals(7, grid.getArea(new Coordinate(0, 0), 1).size());
+        assertEquals(7, grid.area(new Coordinate(0, 0), 1).size());
     }
 
     @Test
     public void number_of_hexes_in_area_radius_2_equal_to_13() {
-        assertEquals(19, grid.getArea(new Coordinate(0, 0), 2).size());
+        assertEquals(19, grid.area(new Coordinate(0, 0), 2).size());
     }
 
     @Test
