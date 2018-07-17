@@ -7,7 +7,7 @@ import java.util.LinkedHashSet
 
 import javafx.geometry.Point2D
 
-class HexGrid @JvmOverloads constructor(private val sideLength: Int = 60) : Grid {
+class HexGrid @JvmOverloads constructor(var sideLength: Double = 60.0) : Grid {
 
     enum class Direction constructor(private val row: Int, private val col: Int) {
         A(-1, 0), B(0, 1), C(1, 1), D(1, 0), E(0, -1), F(-1, -1);
@@ -47,17 +47,17 @@ class HexGrid @JvmOverloads constructor(private val sideLength: Int = 60) : Grid
 
     companion object {
 
-        fun verticesOf(row: Int, col: Int, sideLength: Int): Array<Double> {
+        fun verticesOf(row: Int, col: Int, sideLength: Double): Array<Double> {
 // TODO requires implementation
             return emptyArray()
         }
 
 
-        fun centerPointOf(row: Int, col: Int, sidelength: Int): Point2D {
+        fun centerPointOf(row: Int, col: Int, sidelength: Double): Point2D {
             val hexWidth = 2 * (sidelength * Hexagon.HEIGHT).toInt()
             val oddRowOffset = row % 2 * hexWidth / 2
             val centerPointX = col * hexWidth + oddRowOffset
-            val centerPointY = (row.toDouble() * 1.5 * sidelength.toDouble()).toInt()
+            val centerPointY = (row.toDouble() * 1.5 * sidelength).toInt()
             return Point2D(centerPointX.toDouble(), centerPointY.toDouble())
         }
 
