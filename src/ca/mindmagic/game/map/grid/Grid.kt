@@ -10,7 +10,9 @@ interface Grid {
     /**
      * return the set of all adjacent locations to the specified location
      */
-    fun neighborsOf(location: Coordinate): Set<Coordinate>
+    fun neighborsOf(location: Coordinate): Set<Coordinate> {
+        return neighborsOf(location.row, location.col)
+    }
 
     fun neighborsOf(row: Int, col: Int): Set<Coordinate>
 
@@ -24,8 +26,8 @@ interface Grid {
      * @return all the coordinates within the radius of the center
      */
     fun area(center: Coordinate, radius: Int): Set<Coordinate> {
-        if (radius < 0 || !contains(center)) {
-            return emptySet<Coordinate>()
+        if (radius < 0) {
+            return emptySet()
         } else if (radius == 0) {
             return setOf(center)
         } else {
@@ -36,10 +38,6 @@ interface Grid {
 
     fun area(row: Int, col: Int, radius: Int): Set<Coordinate> {
         return area(Coordinate(row, col), radius)
-    }
-
-    fun contains(coordinate: Coordinate): Boolean {
-        return true
     }
 
     /**

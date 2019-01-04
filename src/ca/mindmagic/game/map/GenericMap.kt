@@ -33,7 +33,7 @@ class GenericMap<T : Tile?>(val gridMap: GridMap, type: Supplier<T>) {
     fun range(source: T, target: T) = gridMap.range(coordinateOf(source), coordinateOf(target))
 
     fun area(center: T, radius: Int): Set<T> {
-        return gridMap.getArea(coordinateOf(center), radius).map { getTile(it) }.toSet()
+        return gridMap.area(coordinateOf(center), radius).map { getTile(it) }.toSet()
     }
 
     fun ring(center: T, radius: Int): Set<T> {

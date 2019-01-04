@@ -17,7 +17,7 @@ public class PointedHexMapTest {
     private static final int MAP_HEIGHT = 4;
     private static final int MAP_WIDTH = 4;
 
-    private HexMap map = new HexMap(MAP_HEIGHT, MAP_WIDTH, POINTED_TOP);
+    private HexMap map = new HexMap(MAP_HEIGHT, MAP_WIDTH, false, false, POINTED_TOP);
     private static final double SQRT = Math.sqrt(0.75);
 
     Coordinate origin = new Coordinate(0, 0);
@@ -78,37 +78,37 @@ public class PointedHexMapTest {
     @Test
     public void centerOfZeroZeroEqualsZeroZero() {
         Point2D origin = new Point2D(0, 0);
-        assertEquals(origin, map.centerOf(0, 0));
+        assertEquals(origin, map.centerPointOf(0, 0));
     }
 
     @Test
     public void centerOfOneZeroEquals() {
         Point2D origin = new Point2D(SQRT, 1.5);
-        assertEquals(origin, map.centerOf(1, 0));
+        assertEquals(origin, map.centerPointOf(1, 0));
     }
 
     @Test
     public void centerOfTwoZeroEquals() {
         Point2D origin = new Point2D(0, 3);
-        assertEquals(origin, map.centerOf(2, 0));
+        assertEquals(origin, map.centerPointOf(2, 0));
     }
 
     @Test
     public void centerOfZeroOneEquals() {
         Point2D origin = new Point2D(2 * SQRT, 0);
-        assertEquals(origin, map.centerOf(0, 1));
+        assertEquals(origin, map.centerPointOf(0, 1));
     }
 
     @Test
     public void centerOfZeroTwoEquals() {
         Point2D origin = new Point2D(4 * SQRT, 0);
-        assertEquals(origin, map.centerOf(0, 2));
+        assertEquals(origin, map.centerPointOf(0, 2));
     }
 
     @Test
     public void centerOfOneOneEquals() {
         Point2D origin = new Point2D(3 * SQRT, 1.5);
-        assertEquals(origin, map.centerOf(1, 1));
+        assertEquals(origin, map.centerPointOf(1, 1));
     }
 
     @Test
@@ -130,12 +130,12 @@ public class PointedHexMapTest {
 
     @Test
     public void coordinateExistAndReturnTrue() {
-        assertTrue(map.locationExistsOnMap(coord(0, 0)));
+        assertTrue(map.contains(coord(0, 0)));
     }
 
     @Test
     public void coordinateDoesNotExist() {
-        assertFalse(map.locationExistsOnMap(coord(-1, 0)));
+        assertFalse(map.contains(coord(-1, 0)));
     }
 
     @Test
@@ -191,7 +191,7 @@ public class PointedHexMapTest {
     @Test
     public void area_around_origin_range_one_wrapped_horizontal() {
         HexMap wrappedMap = new HexMap(5, 5, false, true, POINTED_TOP);
-        Set<Coordinate> area = wrappedMap.getArea(0, 0, 1);
+        Set<Coordinate> area = wrappedMap.area(0, 0, 1);
         assertEquals(5, area.size());
         assertTrue(area.contains(origin));
         assertTrue(area.contains(coord(0, 1)));
@@ -203,7 +203,7 @@ public class PointedHexMapTest {
     @Test
     public void area_around_origin_range_two_wrapped_horizontal() {
         HexMap wrappedMap = new HexMap(5, 5, false, true, POINTED_TOP);
-        Set<Coordinate> area = wrappedMap.getArea(0, 0, 2);
+        Set<Coordinate> area = wrappedMap.area(0, 0, 2);
         assertEquals(12, area.size());
     }
 

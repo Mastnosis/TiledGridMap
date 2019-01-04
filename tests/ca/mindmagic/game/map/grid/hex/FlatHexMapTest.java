@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class FlatHexMapTest {
-  private HexMap map = new HexMap(4,4, HexMap.Orientation.FLAT_TOP);
+    private HexMap map = new HexMap(4, 4, false, false, HexMap.Orientation.FLAT_TOP);
   private HexMap.Orientation orientation = map.getOrientation();
   double height = Math.sqrt(0.75);
 
@@ -56,7 +56,7 @@ public class FlatHexMapTest {
     double expectedX = 0.0;
     double expectedY = 0.0;
     Point2D expected = new Point2D(expectedX, expectedY);
-    assertEquals(expected, map.centerOf(0, 0));
+      assertEquals(expected, map.centerPointOf(0, 0));
   }
 
   @Test
@@ -64,7 +64,7 @@ public class FlatHexMapTest {
     double expectedX = 0;
     double expectedY = 2.0*height;
     Point2D expected = new Point2D(expectedX, expectedY);
-    assertEquals(expected, map.centerOf(1, 0));
+      assertEquals(expected, map.centerPointOf(1, 0));
   }
 
   @Test
@@ -72,7 +72,7 @@ public class FlatHexMapTest {
     double expectedX = 0;
     double expectedY = 4.0*height;
     Point2D expected = new Point2D(expectedX, expectedY);
-    assertEquals(expected, map.centerOf(2, 0));
+      assertEquals(expected, map.centerPointOf(2, 0));
   }
 
   @Test
@@ -80,7 +80,7 @@ public class FlatHexMapTest {
     double expectedX = 1.5;
     double expectedY = height;
     Point2D expected = new Point2D(expectedX, expectedY);
-    assertEquals(expected, map.centerOf(0, 1));
+      assertEquals(expected, map.centerPointOf(0, 1));
   }
 
   @Test
@@ -88,7 +88,7 @@ public class FlatHexMapTest {
     double expectedX = 3.0;
     double expectedY = 0.0;
     Point2D expected = new Point2D(expectedX, expectedY);
-    assertEquals(expected, map.centerOf(0, 2));
+      assertEquals(expected, map.centerPointOf(0, 2));
   }
 
   @Test
@@ -117,7 +117,7 @@ public class FlatHexMapTest {
   }
 
   @Test public void getArea_returns_correct_hexes(){
-    Set<Coordinate> area = map.getArea(1,1, 1);
+      Set<Coordinate> area = map.area(1, 1, 1);
     assertTrue("top", area.contains(new Coordinate(0,1)));
     assertTrue("leftTop", area.contains(new Coordinate(1,0)));
     assertTrue("leftBottom", area.contains(new Coordinate(2,0)));

@@ -18,19 +18,24 @@ class HexGrid @JvmOverloads constructor(var sideLength: Double = 60.0) : Grid {
 
     }
 
-    override fun neighborsOf(hex: Coordinate): Set<Coordinate> {
-        return neighborsOf(hex.row, hex.col)
-    }
 
     override fun neighborsOf(row: Int, col: Int): Set<Coordinate> {
-        val neighbors = LinkedHashSet<Coordinate>()
-        neighbors.add(Coordinate(row - 1, col))
-        neighbors.add(Coordinate(row, col + 1))
-        neighbors.add(Coordinate(row + 1, col + 1))
-        neighbors.add(Coordinate(row + 1, col))
-        neighbors.add(Coordinate(row, col - 1))
-        neighbors.add(Coordinate(row - 1, col - 1))
-        return neighbors
+//        val neighbors = LinkedHashSet<Coordinate>()
+//        neighbors.add(Coordinate(row - 1, col))
+//        neighbors.add(Coordinate(row, col + 1))
+//        neighbors.add(Coordinate(row + 1, col + 1))
+//        neighbors.add(Coordinate(row + 1, col))
+//        neighbors.add(Coordinate(row, col - 1))
+//        neighbors.add(Coordinate(row - 1, col - 1))
+//        return neighbors
+        return setOf(
+                coord(row - 1, col),
+                coord(row, col + 1),
+                coord(row + 1, col + 1),
+                coord(row + 1, col),
+                coord(row, col - 1),
+                coord(row - 1, col - 1)
+        )
     }
 
     override fun range(source: Coordinate, target: Coordinate): Int {
@@ -43,6 +48,10 @@ class HexGrid @JvmOverloads constructor(var sideLength: Double = 60.0) : Grid {
 
     override fun centerPointOf(x: Int, y: Int): Point2D {
         return centerPointOf(x, y, sideLength)
+    }
+
+    override fun toString(): String {
+        return "HexGrid($sideLength)"
     }
 
     companion object {
@@ -69,3 +78,6 @@ class HexGrid @JvmOverloads constructor(var sideLength: Double = 60.0) : Grid {
     }
 
 }
+
+fun coord(row: Int, col: Int) = Coordinate(row, col)
+
