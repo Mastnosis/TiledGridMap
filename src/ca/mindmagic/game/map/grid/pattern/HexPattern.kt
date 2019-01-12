@@ -4,7 +4,7 @@ import ca.mindmagic.game.map.grid.Coordinate
 import ca.mindmagic.game.map.grid.hex.coord
 import javafx.geometry.Point2D
 
-class HexPattern(size: Double = 60.0, rotationInDegree: Double = 0.0) : Pattern(size, rotationInDegree) {
+class HexPattern : Pattern() {
     override fun centerPointOf(locX: Int, locY: Int): Point2D {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

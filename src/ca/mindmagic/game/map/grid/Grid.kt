@@ -1,20 +1,20 @@
 package ca.mindmagic.game.map.grid
 
 
-import javafx.geometry.Point2D
+import ca.mindmagic.game.map.grid.pattern.Pattern
 
 
-interface Grid {
+open class Grid(val pattern: Pattern) {
 
 
     /**
      * return the set of all adjacent locations to the specified location
      */
-    fun neighborsOf(location: Coordinate): Set<Coordinate> {
+    open fun neighborsOf(location: Coordinate): Set<Coordinate> {
         return neighborsOf(location.row, location.col)
     }
 
-    fun neighborsOf(row: Int, col: Int): Set<Coordinate>
+    open fun neighborsOf(row: Int, col: Int): Set<Coordinate> = pattern.neighborsOf(row, col)
 
     /**
      * Return the set of all locations within the given radius including center location.
@@ -56,7 +56,7 @@ interface Grid {
      * @param target the second coordinate
      * @return number of hops from source to target
      */
-    fun range(source: Coordinate, target: Coordinate): Int
+//    fun range(source: Coordinate, target: Coordinate): Int
 
     /**
      * The angle from the center of the starting location to the center of the target location.
@@ -66,17 +66,17 @@ interface Grid {
      * @param target
      * @return angle in degrees
      */
-    fun angleOf(origin: Coordinate, target: Coordinate): Double {
-        val a = centerPointOf(origin)
-        val b = centerPointOf(target)
-        return a.angle(a.add(1.0, 0.0), b)
-    }
+//    fun angleOf(origin: Coordinate, target: Coordinate): Double {
+//        val a = centerPointOf(origin)
+//        val b = centerPointOf(target)
+//        return a.angle(a.add(1.0, 0.0), b)
+//    }
 
-    fun verticesOf(c: Coordinate): Array<Double> {
-        return verticesOf(c.row, c.col)
-    }
+//    fun verticesOf(c: Coordinate): Array<Double> {
+//        return verticesOf(c.row, c.col)
+//    }
 
-    fun verticesOf(row: Int, col: Int): Array<Double>
+//    fun verticesOf(row: Int, col: Int): Array<Double>
 
     //default Point[] verticesOf(int row, int col){
     //	Point[] vertices = new Point[getShape().numberOfSides()];
@@ -89,9 +89,9 @@ interface Grid {
     //	return vertices;
     //}
 
-    fun centerPointOf(c: Coordinate): Point2D {
-        return centerPointOf(c.row, c.col)
-    }
+//    fun centerPointOf(c: Coordinate): Point2D {
+//        return centerPointOf(c.row, c.col)
+//    }
 
-    fun centerPointOf(x: Int, y: Int): Point2D
+//    fun centerPointOf(x: Int, y: Int): Point2D
 }

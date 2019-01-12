@@ -19,15 +19,7 @@ class HexGrid @JvmOverloads constructor(var sideLength: Double = 60.0) : Grid {
     }
 
 
-    override fun neighborsOf(row: Int, col: Int): Set<Coordinate> {
-//        val neighbors = LinkedHashSet<Coordinate>()
-//        neighbors.add(Coordinate(row - 1, col))
-//        neighbors.add(Coordinate(row, col + 1))
-//        neighbors.add(Coordinate(row + 1, col + 1))
-//        neighbors.add(Coordinate(row + 1, col))
-//        neighbors.add(Coordinate(row, col - 1))
-//        neighbors.add(Coordinate(row - 1, col - 1))
-//        return neighbors
+    fun neighborsOf(row: Int, col: Int): Set<Coordinate> {
         return setOf(
                 coord(row - 1, col),
                 coord(row, col + 1),

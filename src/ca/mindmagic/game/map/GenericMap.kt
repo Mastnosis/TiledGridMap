@@ -2,10 +2,9 @@ package ca.mindmagic.game.map
 
 import ca.mindmagic.game.map.grid.Coordinate
 import ca.mindmagic.game.map.grid.GridMap
-import ca.mindmagic.game.map.tile.Tile
 import java.util.function.Supplier
 
-class GenericMap<T : Tile?>(val gridMap: GridMap, type: Supplier<T>) {
+class GenericMap<T>(val gridMap: GridMap, type: Supplier<T>) {
     val tiles = ArrayList<T>(gridMap.width * gridMap.height)
     val width = gridMap.width
     val height = gridMap.height
