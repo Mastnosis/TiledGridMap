@@ -22,7 +22,7 @@ class FlatTopHexPattern : Pattern() {
     /**
      * Returns all locations adjacent to the given coordinate
      */
-    override fun neighborsOf(location: Coordinate): Set<Coordinate> {
+    override fun neighborsOf(location: Coordinate): Set<Coordinate> {  // TODO convert from pointed top to flat top
         return setOf(
                 Coordinate(location.row - 1, location.col),           // top
                 Coordinate(location.row + 1, location.col + 1),           // top right
@@ -37,18 +37,18 @@ class FlatTopHexPattern : Pattern() {
      * @param location
      * @return array of doubles in the form of {x1, y1, x2, y2...}
      */
-    override fun verticesOf(location: Coordinate, sideLength: Double): Array<Double> {
+    override fun verticesOf(location: Coordinate, sideLength: Double): Array<Double> { // TODO convert from pointed top to flat top
         val halfWidth = sideLength * Math.sqrt(0.75)
         val centerPoint = centerPointOf(location, sideLength)
         val x = centerPoint[0]
         val y = centerPoint[1]
         return arrayOf(
-                x, y - sideLength,             // top
-                x + halfWidth, y - sideLength / 2,     // top right
+                x, y - sideLength,                      // top
+                x + halfWidth, y - sideLength / 2,      // top right
                 x + halfWidth, y - sideLength / 2,      // bottom right
-                x, y + sideLength,              // bottom
-                x - halfWidth, y + sideLength / 2,     // bottom left
-                x - halfWidth, y - sideLength / 2)    // top left
+                x, y + sideLength,                      // bottom
+                x - halfWidth, y + sideLength / 2,      // bottom left
+                x - halfWidth, y - sideLength / 2)      // top left
     }
 
     /**

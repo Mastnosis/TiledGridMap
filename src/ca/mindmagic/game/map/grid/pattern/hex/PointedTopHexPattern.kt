@@ -33,11 +33,11 @@ class PointedTopHexPattern : Pattern() {
     override fun neighborsOf(location: Coordinate): Set<Coordinate> {
         return setOf(
                 Coordinate(location.row, location.col + 1),           // right
-                Coordinate(location.row + 1, location.col),           // bottom right
-                Coordinate(location.row + 1, location.col - 1),     // bottom left
+                Coordinate(location.row + 1, location.col),          // bottom right
+                Coordinate(location.row + 1, location.col - 1),  // bottom left
                 Coordinate(location.row, location.col - 1),           // left
-                Coordinate(location.row - 1, location.col - 1),     // upper left
-                Coordinate(location.row - 1, location.col))           // upper right
+                Coordinate(location.row - 1, location.col - 1),  // upper left
+                Coordinate(location.row - 1, location.col))          // upper right
     }
 
     /**
@@ -51,12 +51,12 @@ class PointedTopHexPattern : Pattern() {
         val x = centerPoint[0]
         val y = centerPoint[1]
         return arrayOf(
-                x, y - sideLength,             // top
-                x + halfWidth, y - sideLength / 2,     // top right
+                x, y - sideLength,                      // top
+                x + halfWidth, y - sideLength / 2,      // top right
                 x + halfWidth, y - sideLength / 2,      // bottom right
-                x, y + sideLength,              // bottom
-                x - halfWidth, y + sideLength / 2,     // bottom left
-                x - halfWidth, y - sideLength / 2)    // top left
+                x, y + sideLength,                      // bottom
+                x - halfWidth, y + sideLength / 2,      // bottom left
+                x - halfWidth, y - sideLength / 2)      // top left
     }
 
     /**
