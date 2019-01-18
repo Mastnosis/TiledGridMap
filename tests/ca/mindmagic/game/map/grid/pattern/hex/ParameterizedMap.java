@@ -1,4 +1,4 @@
-package ca.mindmagic.game.map.grid.hex;
+package ca.mindmagic.game.map.grid.pattern.hex;
 
 import ca.mindmagic.game.map.grid.Coordinate;
 import org.junit.runner.RunWith;

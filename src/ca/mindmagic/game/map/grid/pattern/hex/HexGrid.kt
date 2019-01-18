@@ -1,13 +1,11 @@
-package ca.mindmagic.game.map.grid.hex
+package ca.mindmagic.game.map.grid.pattern.hex
 
 import ca.mindmagic.game.map.grid.Coordinate
 import ca.mindmagic.game.map.grid.Grid
-import ca.mindmagic.game.map.grid.pattern.Hexagon
-import java.util.LinkedHashSet
 
 import javafx.geometry.Point2D
 
-class HexGrid @JvmOverloads constructor(var sideLength: Double = 60.0) : Grid {
+class HexGrid @JvmOverloads constructor(var sideLength: Double = 60.0) {
 
     enum class Direction constructor(private val row: Int, private val col: Int) {
         A(-1, 0), B(0, 1), C(1, 1), D(1, 0), E(0, -1), F(-1, -1);
@@ -30,21 +28,7 @@ class HexGrid @JvmOverloads constructor(var sideLength: Double = 60.0) : Grid {
         )
     }
 
-    override fun range(source: Coordinate, target: Coordinate): Int {
-        return range(source.row, source.col, target.row, target.col)
-    }
 
-    override fun verticesOf(row: Int, col: Int): Array<Double> {
-        return verticesOf(row, col, sideLength)
-    }
-
-    override fun centerPointOf(x: Int, y: Int): Point2D {
-        return centerPointOf(x, y, sideLength)
-    }
-
-    override fun toString(): String {
-        return "HexGrid($sideLength)"
-    }
 
     companion object {
 

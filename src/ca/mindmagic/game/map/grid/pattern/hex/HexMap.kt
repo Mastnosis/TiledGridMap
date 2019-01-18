@@ -1,8 +1,8 @@
-package ca.mindmagic.game.map.grid.hex
+package ca.mindmagic.game.map.grid.pattern.hex
 
 /*
-  	 _   _   _
- 	/ \_/ \_/ \
+    _   _   _
+   / \_/ \_/ \
    \_/ \_/ \_/
    / \_/ \_/ \
    \_/ \_/ \_/
@@ -29,11 +29,6 @@ package ca.mindmagic.game.map.grid.hex
 
 import ca.mindmagic.game.map.grid.Coordinate
 import ca.mindmagic.game.map.grid.GridMap
-import ca.mindmagic.game.map.grid.pattern.HexPattern
-
-import java.util.Arrays
-import java.util.function.IntBinaryOperator
-import java.util.function.ToDoubleBiFunction
 
 import javafx.geometry.Point2D
 
@@ -42,53 +37,53 @@ class HexMap @JvmOverloads constructor(height: Int, width: Int,
                                        val orientation: Orientation = Orientation.POINTED_TOP)
     : GridMap(HexPattern(), height, width, wrapHeight, wrapWidth) {
 
-    override fun neighborsOf(mapLocation: Coordinate): Set<Coordinate> {
-        return calcNeighborsOf(mapLocation)
-    }
-
-    override fun neighborsOf(mapRow: Int, mapCol: Int): Set<Coordinate> {
-        return neighborsOf(Coordinate(mapRow, mapCol))
-    }
-
-    private fun calcNeighborsOf(mapLocation: Coordinate): Set<Coordinate> {
-        return calcNeighborsOf(mapLocation.row, mapLocation.col)
-    }
-
-    private fun calcNeighborsOf(mapRow: Int, mapCol: Int): Set<Coordinate> {
-        if (!contains(mapRow, mapCol)) return emptySet()
-        return pattern.neighborsOf(mapToGridCoordinate(mapRow, mapCol))
-                .map { gridToMapCoordinate(it) }
-                .map { wrapIfNeeded(it) }
-                .filter { contains(it) }
-                .toSet()
-    }
-
-    override fun range(source: Coordinate, target: Coordinate): Int {
-        val gridSource = orientation.gridCoordinateOf(source)
-        val gridTarget = orientation.gridCoordinateOf(target)
-        return 1 //grid.range(gridSource, gridTarget)
-    }
-
-
-    public override fun mapToGridCoordinate(row: Int, col: Int): Coordinate {
-        return orientation.gridCoordinateOf(row, col)
-    }
-
-    override fun gridToMapCoordinate(xAxis: Int, yAxis: Int): Coordinate {
-        return orientation.mapCoordinateOf(xAxis, yAxis)
-    }
-
-    override fun verticesOf(row: Int, col: Int): Array<Double> {
-        return orientation.verticesOf(row, col)
-    }
-
-    override fun centerPointOf(row: Int, col: Int): Point2D {
-        return orientation.centerOf(row, col)
-    }
-
-    override fun toString(): String {
-        return "HexMap($height, $width, $orientation)"
-    }
+//    override fun neighborsOf(mapLocation: Coordinate): Set<Coordinate> {
+//        return calcNeighborsOf(mapLocation)
+//    }
+//
+//    override fun neighborsOf(mapRow: Int, mapCol: Int): Set<Coordinate> {
+//        return neighborsOf(Coordinate(mapRow, mapCol))
+//    }
+//
+//    private fun calcNeighborsOf(mapLocation: Coordinate): Set<Coordinate> {
+//        return calcNeighborsOf(mapLocation.row, mapLocation.col)
+//    }
+//
+//    private fun calcNeighborsOf(mapRow: Int, mapCol: Int): Set<Coordinate> {
+//        if (!contains(mapRow, mapCol)) return emptySet()
+//        return pattern.neighborsOf(mapToGridCoordinate(mapRow, mapCol))
+//                .map { gridToMapCoordinate(it) }
+//                .map { wrapIfNeeded(it) }
+//                .filter { contains(it) }
+//                .toSet()
+//    }
+//
+//    override fun range(source: Coordinate, target: Coordinate): Int {
+//        val gridSource = orientation.gridCoordinateOf(source)
+//        val gridTarget = orientation.gridCoordinateOf(target)
+//        return 1 //grid.range(gridSource, gridTarget)
+//    }
+//
+//
+//    public override fun mapToGridCoordinate(row: Int, col: Int): Coordinate {
+//        return orientation.gridCoordinateOf(row, col)
+//    }
+//
+//    override fun gridToMapCoordinate(xAxis: Int, yAxis: Int): Coordinate {
+//        return orientation.mapCoordinateOf(xAxis, yAxis)
+//    }
+//
+//    override fun verticesOf(row: Int, col: Int): Array<Double> {
+//        return orientation.verticesOf(row, col)
+//    }
+//
+//    override fun centerPointOf(row: Int, col: Int): Point2D {
+//        return orientation.centerOf(row, col)
+//    }
+//
+//    override fun toString(): String {
+//        return "HexMap($height, $width, $orientation)"
+//    }
 
     enum class Orientation constructor(
             private val toGridRow: (Int, Int) -> Int,

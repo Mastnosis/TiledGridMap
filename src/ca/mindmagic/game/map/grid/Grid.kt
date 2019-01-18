@@ -4,17 +4,13 @@ package ca.mindmagic.game.map.grid
 import ca.mindmagic.game.map.grid.pattern.Pattern
 
 
-open class Grid(val pattern: Pattern) {
+open class Grid @JvmOverloads constructor(val pattern: Pattern, var size: Double = 60.0) {
 
 
     /**
      * return the set of all adjacent locations to the specified location
      */
-    open fun neighborsOf(location: Coordinate): Set<Coordinate> {
-        return neighborsOf(location.row, location.col)
-    }
-
-    open fun neighborsOf(row: Int, col: Int): Set<Coordinate> = pattern.neighborsOf(row, col)
+    fun neighborsOf(location: Coordinate): Set<Coordinate> = pattern.neighborsOf(location)
 
     /**
      * Return the set of all locations within the given radius including center location.
@@ -36,13 +32,10 @@ open class Grid(val pattern: Pattern) {
         }
     }
 
-    fun area(row: Int, col: Int, radius: Int): Set<Coordinate> {
-        return area(Coordinate(row, col), radius)
-    }
-
     /**
      * Returns all coordinates at the specified radius. Locations
-     * within that radius are excluded.
+     * within that radius are excluded. Radius 0 will return center
+     * Radius 1 will return only neighbors of center etc.
      */
     fun ring(center: Coordinate, radius: Int): Set<Coordinate> {
         return area(center, radius).minus(area(center, radius - 1))
@@ -56,42 +49,46 @@ open class Grid(val pattern: Pattern) {
      * @param target the second coordinate
      * @return number of hops from source to target
      */
-//    fun range(source: Coordinate, target: Coordinate): Int
+    /*
+        This has the advantage that it works with any pattern. No need to create a new algorithm for each.
+        The disadvantage is that it has terrible performance.
+     */
+    fun range(source: Coordinate, target: Coordinate): Int {
+        var range: Int = 0
+        while (!ring(source, range).contains(target)) {
+            range++
+        }
+        return range
+    }
 
     /**
      * The angle from the center of the starting location to the center of the target location.
      * This can be useful for determining unit facing.
      *
-     * @param origin
+     * @param source
      * @param target
      * @return angle in degrees
      */
-//    fun angleOf(origin: Coordinate, target: Coordinate): Double {
-//        val a = centerPointOf(origin)
-//        val b = centerPointOf(target)
-//        return a.angle(a.add(1.0, 0.0), b)
-//    }
+    fun angleOf(source: Coordinate, target: Coordinate): Double {
+        val a = pattern.centerPointOf(source)
+        val b = pattern.centerPointOf(target)
+        return 0.0
+    }
 
-//    fun verticesOf(c: Coordinate): Array<Double> {
-//        return verticesOf(c.row, c.col)
-//    }
+    /**
+     * Provide the vertices for the given location
+     *
+     * @param location
+     * @return array of points (javafx.geometry.Point2D)
+     */
+    fun verticesOf(location: Coordinate) = pattern.verticesOf(location, size)
 
-//    fun verticesOf(row: Int, col: Int): Array<Double>
+    /**
+     * Provide the vertices for the given location
+     *
+     * @param location
+     * @return the point that defines the center of the given coordinate (javafx.geometry.Point2D)
+     */
+    fun centerOf(location: Coordinate) = pattern.centerPointOf(location, size)
 
-    //default Point[] verticesOf(int row, int col){
-    //	Point[] vertices = new Point[getShape().numberOfSides()];
-    //	Point centerPoint = getCenterPoint(row, col);
-    //	int index = 0;
-    //	for (Point p: getShape().verticesOf()) {
-    //		vertices[index] = new Point(centerPoint.x + p.x, centerPoint.y + p.y);
-    //		index++;
-    //	}
-    //	return vertices;
-    //}
-
-//    fun centerPointOf(c: Coordinate): Point2D {
-//        return centerPointOf(c.row, c.col)
-//    }
-
-//    fun centerPointOf(x: Int, y: Int): Point2D
 }

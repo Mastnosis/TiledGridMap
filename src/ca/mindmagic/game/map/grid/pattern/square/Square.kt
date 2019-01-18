@@ -1,5 +1,6 @@
-package ca.mindmagic.game.map.grid.pattern
+package ca.mindmagic.game.map.grid.pattern.square
 
+import ca.mindmagic.game.map.grid.pattern.Shape
 import javafx.geometry.Point2D
 
 class Square(sideLength: Double) : Shape(sideLength) {

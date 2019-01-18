@@ -3,9 +3,9 @@ package ca.mindmagic.game.map.grid
 import ca.mindmagic.game.map.grid.pattern.Pattern
 
 
-open class GridMap<T> @JvmOverloads constructor(pattern: Pattern,
-                                                protected val width: Int, protected val height: Int,
-                                                val wrapHorizontal: Boolean = false, val wrapVertical: Boolean = false) : Grid(pattern) {
+open class GridMap @JvmOverloads constructor(pattern: Pattern,
+                                             protected val width: Int, protected val height: Int,
+                                             val wrapHorizontal: Boolean = false, val wrapVertical: Boolean = false) : Grid(pattern) {
 
     fun contains(location: Coordinate): Boolean {
         return contains(location.row, location.col)
@@ -16,22 +16,6 @@ open class GridMap<T> @JvmOverloads constructor(pattern: Pattern,
         if (col < 0 || col >= width) return false
         return true
     }
-
-//    private fun mapToGridCoordinate(c: Coordinate): Coordinate {
-//        return mapToGridCoordinate(c.row, c.col)
-//    }
-//
-//    private fun mapToGridCoordinate(row: Int, col: Int): Coordinate {
-//        return Coordinate(0, 0)
-//    }
-//
-//    private fun gridToMapCoordinate(c: Coordinate): Coordinate {
-//        return gridToMapCoordinate(c.row, c.col)
-//    }
-//
-//    private fun gridToMapCoordinate(xAxis: Int, yAxis: Int): Coordinate {
-//        return Coordinate(0, 0)
-//    }
 
     private fun wrapIfNeeded(c: Coordinate): Coordinate {
         var result = c

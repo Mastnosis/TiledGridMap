@@ -1,7 +1,7 @@
-package ca.mindmagic.game.map.grid.pattern
+package ca.mindmagic.game.map.grid.pattern.hex
 
+import ca.mindmagic.game.map.grid.pattern.Shape
 import javafx.geometry.Point2D
-import java.util.Arrays
 
 class Hexagon(sideLength: Double) : Shape(sideLength) {
 
@@ -27,37 +27,37 @@ class Hexagon(sideLength: Double) : Shape(sideLength) {
                     upperLeftPoint(sideLength))
         }
 
-        private fun upperRightPoint(size: Double): Point2D {
+        internal fun upperRightPoint(size: Double): Point2D {
             val x = (HEIGHT * size)
             val y = -size / 2.0
             return Point2D(x, y)
         }
 
-        private fun lowerRightPoint(size: Double): Point2D {
+        internal fun lowerRightPoint(size: Double): Point2D {
             val x = (HEIGHT * size)
             val y = size / 2.0
             return Point2D(x, y)
         }
 
-        private fun bottomPoint(size: Double): Point2D { // done
+        internal fun bottomPoint(size: Double): Point2D { // done
             val x = 0.0
             val y = size
             return Point2D(x, y)
         }
 
-        private fun lowerLeftPoint(size: Double): Point2D {
+        internal fun lowerLeftPoint(size: Double): Point2D {
             val x = -(HEIGHT * size)
             val y = size / 2.0
             return Point2D(x, y)
         }
 
-        private fun upperLeftPoint(size: Double): Point2D {
+        internal fun upperLeftPoint(size: Double): Point2D {
             val x = -(HEIGHT * size)
             val y = -size / 2.0
             return Point2D(x, y)
         }
 
-        private fun topPoint(size: Double): Point2D { // done
+        internal fun topPoint(size: Double): Point2D { // done
             val x = 0.0
             val y = -size
             return Point2D(x, y)

@@ -1,4 +1,4 @@
-package ca.mindmagic.game.map.grid.square
+package ca.mindmagic.game.map.grid.pattern.square
 
 import java.util.HashSet
 
@@ -6,7 +6,7 @@ import ca.mindmagic.game.map.grid.Coordinate
 import ca.mindmagic.game.map.grid.Grid
 import javafx.geometry.Point2D
 
-class SquareGrid(sideLength: Int) : Grid {
+class SquareGrid(sideLength: Int) {
 
     var sideLength: Int = 0
         internal set
@@ -18,43 +18,43 @@ class SquareGrid(sideLength: Int) : Grid {
         this.sideLength = sideLength
     }
 
-    override fun verticesOf(c: Coordinate): Array<Double> {
-        return verticesOf(c.row, c.col, sideLength)
-    }
-
-    override fun verticesOf(row: Int, col: Int): Array<Double> {
-        return verticesOf(row, col, sideLength)
-    }
-
-    override fun centerPointOf(x: Int, y: Int): Point2D {
-        return Point2D(0.0, 0.0)
-    }  // TODO needs implementing
-
-    override fun neighborsOf(c: Coordinate): Set<Coordinate> {
-        return neighborsOf(c.row, c.col)
-    }
-
-    override fun neighborsOf(row: Int, col: Int): Set<Coordinate> {
-        val neighbors = HashSet<Coordinate>()
-        neighbors.add(Coordinate(row + 1, col))
-        neighbors.add(Coordinate(row, col + 1))
-        neighbors.add(Coordinate(row - 1, col))
-        neighbors.add(Coordinate(row, col - 1))
-        if (diagonalIsAdjacent) {
-            neighbors.add(Coordinate(row + 1, col + 1))
-            neighbors.add(Coordinate(row - 1, col + 1))
-            neighbors.add(Coordinate(row + 1, col - 1))
-            neighbors.add(Coordinate(row - 1, col - 1))
-        }
-        return neighbors
-    }
-
-    override fun range(source: Coordinate, target: Coordinate): Int {
-        var range = 0
-        range += Math.abs(source.col - target.col)
-        range += Math.abs(source.row - target.row)
-        return range
-    }
+//    override fun verticesOf(c: Coordinate): Array<Double> {
+//        return verticesOf(c.row, c.col, sideLength)
+//    }
+//
+//    override fun verticesOf(row: Int, col: Int): Array<Double> {
+//        return verticesOf(row, col, sideLength)
+//    }
+//
+//    override fun centerPointOf(x: Int, y: Int): Point2D {
+//        return Point2D(0.0, 0.0)
+//    }  // TODO needs implementing
+//
+//    override fun neighborsOf(c: Coordinate): Set<Coordinate> {
+//        return neighborsOf(c.row, c.col)
+//    }
+//
+//    override fun neighborsOf(row: Int, col: Int): Set<Coordinate> {
+//        val neighbors = HashSet<Coordinate>()
+//        neighbors.add(Coordinate(row + 1, col))
+//        neighbors.add(Coordinate(row, col + 1))
+//        neighbors.add(Coordinate(row - 1, col))
+//        neighbors.add(Coordinate(row, col - 1))
+//        if (diagonalIsAdjacent) {
+//            neighbors.add(Coordinate(row + 1, col + 1))
+//            neighbors.add(Coordinate(row - 1, col + 1))
+//            neighbors.add(Coordinate(row + 1, col - 1))
+//            neighbors.add(Coordinate(row - 1, col - 1))
+//        }
+//        return neighbors
+//    }
+//
+//    override fun range(source: Coordinate, target: Coordinate): Int {
+//        var range = 0
+//        range += Math.abs(source.col - target.col)
+//        range += Math.abs(source.row - target.row)
+//        return range
+//    }
 
     companion object {
 
