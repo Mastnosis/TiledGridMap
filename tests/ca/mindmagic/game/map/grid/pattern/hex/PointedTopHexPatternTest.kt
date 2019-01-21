@@ -8,9 +8,8 @@ import org.junit.Assert.*
 class PointedTopHexPatternTest {
 
     val pointedHexPattern = PointedTopHexPattern()
+
     val origin = Coordinate(0, 0)
-    val neighbor = Coordinate(0, 1)
-    val neighborsNeighbor = Coordinate(1, 1)
 
     @Test
     fun rangeSelf() {
@@ -19,7 +18,7 @@ class PointedTopHexPatternTest {
 
     @Test
     fun rangeNeighbors() {
-        assertEquals(1, pointedHexPattern.range(origin, neighbor))
+        assertEquals(1, pointedHexPattern.range(origin, Coordinate(0, 1)))
         assertEquals(1, pointedHexPattern.range(origin, Coordinate(-1, 0)))
         assertEquals(1, pointedHexPattern.range(origin, Coordinate(1, 0)))
         assertEquals(1, pointedHexPattern.range(origin, Coordinate(1, -1)))
@@ -29,7 +28,7 @@ class PointedTopHexPatternTest {
 
     @Test
     fun rangeNeighborsNeighbor() {
-        assertEquals(2, pointedHexPattern.range(origin, neighborsNeighbor))
+        assertEquals(2, pointedHexPattern.range(origin, Coordinate(1, 1)))
     }
 
     @Test
