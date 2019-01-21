@@ -22,10 +22,10 @@ class FlatTopHexPattern : Pattern() {
     /**
      * Returns all locations adjacent to the given coordinate
      */
-    override fun neighborsOf(location: Coordinate): Set<Coordinate> {  // TODO convert from pointed top to flat top
+    override fun neighborsOf(location: Coordinate): Set<Coordinate> {
         return setOf(
                 Coordinate(location.row - 1, location.col),           // top
-                Coordinate(location.row + 1, location.col + 1),           // top right
+                Coordinate(location.row - 1, location.col + 1),           // top right
                 Coordinate(location.row, location.col + 1),     // bottom right
                 Coordinate(location.row + 1, location.col),           // bottom
                 Coordinate(location.row, location.col - 1),     // bottom left
@@ -37,18 +37,18 @@ class FlatTopHexPattern : Pattern() {
      * @param location
      * @return array of doubles in the form of {x1, y1, x2, y2...}
      */
-    override fun verticesOf(location: Coordinate, sideLength: Double): Array<Double> { // TODO convert from pointed top to flat top
-        val halfWidth = sideLength * Math.sqrt(0.75)
+    override fun verticesOf(location: Coordinate, sideLength: Double): Array<Double> {
+        val halfHeight = sideLength * Math.sqrt(0.75)
         val centerPoint = centerPointOf(location, sideLength)
         val x = centerPoint[0]
         val y = centerPoint[1]
         return arrayOf(
-                x, y - sideLength,                      // top
-                x + halfWidth, y - sideLength / 2,      // top right
-                x + halfWidth, y - sideLength / 2,      // bottom right
-                x, y + sideLength,                      // bottom
-                x - halfWidth, y + sideLength / 2,      // bottom left
-                x - halfWidth, y - sideLength / 2)      // top left
+                x - sideLength / 2, y - halfHeight,     // top left
+                x + sideLength / 2, y - halfHeight,     // top right
+                x + sideLength, y,                   // right
+                x + sideLength / 2, y + halfHeight,     // bottom right
+                x - sideLength / 2, y + halfHeight,     // bottom left
+                x - sideLength, y)                   // left
     }
 
     /**
@@ -58,9 +58,9 @@ class FlatTopHexPattern : Pattern() {
      * @return the x and y coordinate of the center point as Double
      */
     override fun centerPointOf(location: Coordinate, sideLength: Double): Array<Double> {
-        val width = sideLength * Math.sqrt(0.75) * 2
-        val x = (location.col * width) + (width / 2 * (location.col % 2))
-        val y = location.row * sideLength * 1.5
+        val height = sideLength * Math.sqrt(0.75) * 2
+        val x = (location.col * sideLength * 1.5)
+        val y = location.row * height + (location.col % 2 * height / 2)
         return arrayOf(x, y)
     }
 
@@ -82,5 +82,5 @@ class FlatTopHexPattern : Pattern() {
      */
     fun Coordinate.x() = col
 
-    fun Coordinate.y() = row + ceil(row / 2.0).toInt() // TODO correct algorithm for flat top pattern
+    fun Coordinate.y() = row + ceil(col / 2.0).toInt() // TODO correct algorithm for flat top pattern
 }
