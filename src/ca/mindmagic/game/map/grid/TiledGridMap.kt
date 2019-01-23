@@ -4,6 +4,7 @@ import ca.mindmagic.game.map.grid.pattern.Pattern
 
 import java.util.*
 import java.util.function.Supplier
+import java.util.stream.Collectors
 
 class TiledGridMap<T>(pattern: Pattern, width: Int, height: Int, wrapHorizontal: Boolean, wrapVertical: Boolean, tileType: Supplier<T>) : GridMap(pattern, height, width, wrapHorizontal, wrapVertical) {
 
@@ -26,27 +27,30 @@ class TiledGridMap<T>(pattern: Pattern, width: Int, height: Int, wrapHorizontal:
     }
 
     private fun calculateNeighbors(tile: T): Set<T> {
-        TODO("return mapped set of neighbors")
-        return emptySet()
+        val neighbors = neighborsOf(getCoordinate(tile))
+        return neighbors.stream()
+                .map { c -> getTile(c) }
+                .collect(Collectors.toSet())
     }
 
-    fun getTile(row: Int, col: Int): T? {
-        return if (row > super.height || col > super.width) null else tiles[row * super.width + col]
+    fun getTile(row: Int, col: Int): T {
+        return tiles[row * super.width + col]
     }
 
-    fun getTileCoordinate(tile: T): Coordinate {
+    fun getCoordinate(tile: T): Coordinate {
         val index = tiles.indexOf(tile);
         return Coordinate(row(index), col(index))
     }
 
     fun getTile(location: Coordinate) = getTile(location.row, location.col)
 
-    fun getNeighborsOf(tile: T): Set<T> {
+    fun neighborsOf(tile: T): Set<T> {
         return neighborMap[tile] ?: emptySet()
     }
 
     private fun row(index: Int) = index / width
 
     private fun col(index: Int) = index % width
+
 
 }

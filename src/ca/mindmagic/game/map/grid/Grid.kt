@@ -10,7 +10,7 @@ open class Grid @JvmOverloads constructor(val pattern: Pattern, var size: Double
     /**
      * return the set of all adjacent locations to the specified location
      */
-    fun neighborsOf(location: Coordinate): Set<Coordinate> = pattern.neighborsOf(location)
+    open fun neighborsOf(location: Coordinate): Set<Coordinate> = pattern.neighborsOf(location)
 
     /**
      * Return the set of all locations within the given radius including center location.

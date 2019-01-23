@@ -71,4 +71,10 @@ class PointedTopHexPatternTest {
         assertEquals(1, pointedHexPattern.range(c, Coordinate(-1, -1)))
         assertEquals(2, pointedHexPattern.range(c, Coordinate(-2, -1)))
     }
+
+    @Test
+    fun verticesOfOrigin() {
+        val vertices = pointedHexPattern.verticesOf(origin, 30.0)
+        assertArrayEquals(doubleArrayOf(0.0, -30.0, 26.0, -15.0, 26.0, 15.0, 0.0, 30.0, -26.0, 15.0, -26.0, -15.0), vertices.toDoubleArray(), 0.1)
+    }
 }

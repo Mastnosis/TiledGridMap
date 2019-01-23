@@ -10,100 +10,100 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class FlatHexMapTest {
-    private HexMap map = new HexMap(4, 4, false, false, HexMap.Orientation.FLAT_TOP);
-  private HexMap.Orientation orientation = map.getOrientation();
-  double height = Math.sqrt(0.75);
-
-  Double[] vertices = {-0.5, -height, 0.5, -height, 1.0, 0.0, 0.5, height, -0.5, height, -1.0, 0.0};
-  Point2D[] points = {new Point2D(-0.5, -height), new Point2D(0.5, -height),
-          new Point2D(1.0, 0), new Point2D(0.5, height), new Point2D(-0.5, height),
-          new Point2D(-1, 0)};
-
-  Coordinate origin = new Coordinate(0,0);
-  Coordinate positiveQuadrant = new Coordinate(5,4);
-  Coordinate negativeQuadrant = new Coordinate(6,-1);
-  Coordinate negPosQuadrant = new Coordinate(-2,3);
-  Coordinate posNegQuadrant = new Coordinate(1,-4);
-
-  @Test
-  public void zeroZeroEqualsCoordZeroZero() {
-    assertEquals(new Coordinate(0,0), gridCoordinateOf(0,0));
-    //assertEquals(new Koordinate(0,0), map.coordinateOf(0,0));
-  }
-
-  @Test
-  public void zeroOneEqualsCoordOneOne() {
-    assertEquals(new Coordinate(1, 1), gridCoordinateOf(0,1));
-  }
-
-  @Test
-  public void zeroTwoEqualsCoordOneTwo() {
-    assertEquals(new Coordinate(1,2), gridCoordinateOf(0,2));
-  }
-
-  @Test
-  public void twoZeroEqualsCoordTwoZero() {
-    assertEquals(new Coordinate(2,0), gridCoordinateOf(2,0));
-  }
-  @Test
-  public void oneOneEqualsCoordTwoOne() {
-    assertEquals(new Coordinate(2,1), gridCoordinateOf(1,1));
-  }
-
+//    private HexMap map = new HexMap(4, 4, false, false, HexMap.Orientation.FLAT_TOP);
+//  private HexMap.Orientation orientation = map.getOrientation();
+//  double height = Math.sqrt(0.75);
+//
+//  Double[] vertices = {-0.5, -height, 0.5, -height, 1.0, 0.0, 0.5, height, -0.5, height, -1.0, 0.0};
+//  Point2D[] points = {new Point2D(-0.5, -height), new Point2D(0.5, -height),
+//          new Point2D(1.0, 0), new Point2D(0.5, height), new Point2D(-0.5, height),
+//          new Point2D(-1, 0)};
+//
+//  Coordinate origin = new Coordinate(0,0);
+//  Coordinate positiveQuadrant = new Coordinate(5,4);
+//  Coordinate negativeQuadrant = new Coordinate(6,-1);
+//  Coordinate negPosQuadrant = new Coordinate(-2,3);
+//  Coordinate posNegQuadrant = new Coordinate(1,-4);
+//
 //  @Test
-//  public void centerOfZeroZeroEqualsZeroZero() {
-//    double expectedX = 0.0;
-//    double expectedY = 0.0;
-//    Point2D expected = new Point2D(expectedX, expectedY);
-//      assertEquals(expected, map.centerPointOf(0, 0));
+//  public void zeroZeroEqualsCoordZeroZero() {
+//    assertEquals(new Coordinate(0,0), gridCoordinateOf(0,0));
+//    //assertEquals(new Koordinate(0,0), map.coordinateOf(0,0));
 //  }
 //
 //  @Test
-//  public void centerOfOneZeroEquals() {
-//    double expectedX = 0;
-//    double expectedY = 2.0*height;
-//    Point2D expected = new Point2D(expectedX, expectedY);
-//      assertEquals(expected, map.centerPointOf(1, 0));
+//  public void zeroOneEqualsCoordOneOne() {
+//    assertEquals(new Coordinate(1, 1), gridCoordinateOf(0,1));
 //  }
 //
 //  @Test
-//  public void centerOfTwoZeroEquals() {
-//    double expectedX = 0;
-//    double expectedY = 4.0*height;
-//    Point2D expected = new Point2D(expectedX, expectedY);
-//      assertEquals(expected, map.centerPointOf(2, 0));
+//  public void zeroTwoEqualsCoordOneTwo() {
+//    assertEquals(new Coordinate(1,2), gridCoordinateOf(0,2));
 //  }
 //
 //  @Test
-//  public void centerOfZeroOneEquals() {
-//    double expectedX = 1.5;
-//    double expectedY = height;
-//    Point2D expected = new Point2D(expectedX, expectedY);
-//      assertEquals(expected, map.centerPointOf(0, 1));
+//  public void twoZeroEqualsCoordTwoZero() {
+//    assertEquals(new Coordinate(2,0), gridCoordinateOf(2,0));
+//  }
+//  @Test
+//  public void oneOneEqualsCoordTwoOne() {
+//    assertEquals(new Coordinate(2,1), gridCoordinateOf(1,1));
+//  }
+//
+////  @Test
+////  public void centerOfZeroZeroEqualsZeroZero() {
+////    double expectedX = 0.0;
+////    double expectedY = 0.0;
+////    Point2D expected = new Point2D(expectedX, expectedY);
+////      assertEquals(expected, map.centerPointOf(0, 0));
+////  }
+////
+////  @Test
+////  public void centerOfOneZeroEquals() {
+////    double expectedX = 0;
+////    double expectedY = 2.0*height;
+////    Point2D expected = new Point2D(expectedX, expectedY);
+////      assertEquals(expected, map.centerPointOf(1, 0));
+////  }
+////
+////  @Test
+////  public void centerOfTwoZeroEquals() {
+////    double expectedX = 0;
+////    double expectedY = 4.0*height;
+////    Point2D expected = new Point2D(expectedX, expectedY);
+////      assertEquals(expected, map.centerPointOf(2, 0));
+////  }
+////
+////  @Test
+////  public void centerOfZeroOneEquals() {
+////    double expectedX = 1.5;
+////    double expectedY = height;
+////    Point2D expected = new Point2D(expectedX, expectedY);
+////      assertEquals(expected, map.centerPointOf(0, 1));
+////  }
+////
+////  @Test
+////  public void centerOfZeroTwoEquals() {
+////    double expectedX = 3.0;
+////    double expectedY = 0.0;
+////    Point2D expected = new Point2D(expectedX, expectedY);
+////      assertEquals(expected, map.centerPointOf(0, 2));
+////  }
+//
+//  @Test
+//  public void conversionIsSymmetric() {
+//    testConversionSymmetry(origin);
+//    testConversionSymmetry(positiveQuadrant);
+//    testConversionSymmetry(negativeQuadrant);
+//    testConversionSymmetry(posNegQuadrant);
+//    testConversionSymmetry(negPosQuadrant);
 //  }
 //
 //  @Test
-//  public void centerOfZeroTwoEquals() {
-//    double expectedX = 3.0;
-//    double expectedY = 0.0;
-//    Point2D expected = new Point2D(expectedX, expectedY);
-//      assertEquals(expected, map.centerPointOf(0, 2));
+//  public void originVertices() {
+//    assertTrue(Arrays.equals(vertices, orientation.verticesOf(origin)));
+//    //assertEquals(points, orientation.verticesOf(origin));
 //  }
-
-  @Test
-  public void conversionIsSymmetric() {
-    testConversionSymmetry(origin);
-    testConversionSymmetry(positiveQuadrant);
-    testConversionSymmetry(negativeQuadrant);
-    testConversionSymmetry(posNegQuadrant);
-    testConversionSymmetry(negPosQuadrant);
-  }
-
-  @Test
-  public void originVertices() {
-    assertTrue(Arrays.equals(vertices, orientation.verticesOf(origin)));
-    //assertEquals(points, orientation.verticesOf(origin));
-  }
 
 //  @Test
 //  public void origin_has_two_neighbors() {
@@ -126,12 +126,12 @@ public class FlatHexMapTest {
 //    assertTrue("Bottom", area.contains(new Coordinate(2,1)));
 //  }
 
-  private void testConversionSymmetry(Coordinate mapCoordinate){
-    assertEquals(mapCoordinate, orientation.
-        mapCoordinateOf(orientation.gridCoordinateOf(mapCoordinate)));
-  }
-
-  private Coordinate gridCoordinateOf(int mapRow, int mapCol){
-    return orientation.gridCoordinateOf(new Coordinate(mapRow, mapCol));
-  }
+//  private void testConversionSymmetry(Coordinate mapCoordinate){
+//    assertEquals(mapCoordinate, orientation.
+//        mapCoordinateOf(orientation.gridCoordinateOf(mapCoordinate)));
+//  }
+//
+//  private Coordinate gridCoordinateOf(int mapRow, int mapCol){
+//    return orientation.gridCoordinateOf(new Coordinate(mapRow, mapCol));
+//  }
 }

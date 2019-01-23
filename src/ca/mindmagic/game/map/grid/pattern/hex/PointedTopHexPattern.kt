@@ -53,7 +53,7 @@ class PointedTopHexPattern : Pattern() {
         return arrayOf(
                 x, y - sideLength,                      // top
                 x + halfWidth, y - sideLength / 2,      // top right
-                x + halfWidth, y - sideLength / 2,      // bottom right
+                x + halfWidth, y + sideLength / 2,      // bottom right
                 x, y + sideLength,                      // bottom
                 x - halfWidth, y + sideLength / 2,      // bottom left
                 x - halfWidth, y - sideLength / 2)      // top left

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class HexGridTest {
 
-    private HexGrid grid = new HexGrid(30);
+//    private HexGrid grid = new HexGrid(30);
 
     private Coordinate origin = new Coordinate(0, 0);
     private Coordinate positiveQuadrant = new Coordinate(5, 4);
@@ -69,10 +69,10 @@ public class HexGridTest {
 //    assertEquals(p1, p2);
 //  }
 
-    @Test
-    public void neighborsRadiusOneRangeOne() {
-        Coordinate center = new Coordinate(0, 0);
-    }
+//    @Test
+//    public void neighborsRadiusOneRangeOne() {
+//        Coordinate center = new Coordinate(0, 0);
+//    }
 
 //    @Test
 //    public void numberOfNeighborsEqualsSix() {
@@ -85,10 +85,10 @@ public class HexGridTest {
 //        grid.neighborsOf(center).forEach(e -> assertRange(center, e, 1));
 //    }
 
-    @Test
-    public void number_of_neighbors_equal_to_six() {
-        assertEquals(6, grid.neighborsOf(0, 0).size());
-    }
+//    @Test
+//    public void number_of_neighbors_equal_to_six() {
+//        assertEquals(6, grid.neighborsOf(0, 0).size());
+//    }
 
 //    @Test
 //    public void number_of_neighbors_radius_neg_equal_to_zero() {

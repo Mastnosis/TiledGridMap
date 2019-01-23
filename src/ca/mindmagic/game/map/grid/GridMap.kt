@@ -1,11 +1,22 @@
 package ca.mindmagic.game.map.grid
 
 import ca.mindmagic.game.map.grid.pattern.Pattern
-
+import java.util.stream.Collectors
 
 open class GridMap @JvmOverloads constructor(pattern: Pattern,
-                                             protected val width: Int, protected val height: Int,
+                                             _width: Int, _height: Int,
                                              val wrapHorizontal: Boolean = false, val wrapVertical: Boolean = false) : Grid(pattern) {
+
+    val width = if (_width < 1) 1 else _width
+    val height = if (_height < 1) 1 else _height
+
+
+    override fun neighborsOf(location: Coordinate): Set<Coordinate> {
+        return pattern.neighborsOf(location).stream()
+                .map { c -> wrapIfNeeded(c) }
+                .filter { c -> contains(c) }
+                .collect(Collectors.toSet())
+    }
 
     fun contains(location: Coordinate): Boolean {
         return contains(location.row, location.col)
@@ -19,32 +30,31 @@ open class GridMap @JvmOverloads constructor(pattern: Pattern,
 
     private fun wrapIfNeeded(c: Coordinate): Coordinate {
         var result = c
-        if (wrapVertical) result = wrapHeight(result)
-        if (wrapHorizontal) result = wrapWidth(result)
+        if (wrapVertical) result = wrapVertical(result)
+        if (wrapHorizontal) result = wrapHorizontal(result)
         return result
     }
 
-    private fun wrapHeight(c: Coordinate): Coordinate {
-        val yOffset = c.row
-        if (yOffset < 0) {
-            return Coordinate(height + yOffset, c.col)
+    private fun wrapVertical(c: Coordinate): Coordinate {
+        var yOffset = c.row
+        while (yOffset < 0) {
+            yOffset = height - yOffset       // it is important that height never be less than 1 or this will never exit
         }
-        if (yOffset >= height) {
-            return Coordinate(yOffset - height, c.col)
-        } else {
-            return c
+        while (yOffset >= height) {
+            yOffset -= height
         }
+        return Coordinate(yOffset, c.col)
     }
 
-    protected fun wrapWidth(c: Coordinate): Coordinate {
-        val xOffset = c.col
-        if (xOffset < 0) {
-            return Coordinate(c.row, width + xOffset)
+    private fun wrapHorizontal(c: Coordinate): Coordinate {
+        var xOffset = c.col
+        while (xOffset < 0) {
+            xOffset = width - xOffset       // it is important that width never be less than 1 or this will never exit
         }
-        if (xOffset >= width) {
-            return Coordinate(c.row, xOffset - width)
-        } else {
-            return c
+        while (xOffset >= width) {
+            xOffset -= width
         }
+        return Coordinate(c.row, xOffset)
     }
 }
+
