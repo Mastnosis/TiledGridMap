@@ -31,13 +31,14 @@ class PointedTopHexPattern : Pattern() {
      * Returns all locations adjacent to the given coordinate
      */
     override fun neighborsOf(location: Coordinate): Set<Coordinate> {
+        val offset = if (location.row % 2 == 0) 0 else 1
         return setOf(
                 Coordinate(location.row, location.col + 1),           // right
-                Coordinate(location.row + 1, location.col),          // bottom right
-                Coordinate(location.row + 1, location.col - 1),  // bottom left
+                Coordinate(location.row + 1, location.col + offset),          // bottom right
+                Coordinate(location.row + 1, location.col - 1 + offset),  // bottom left
                 Coordinate(location.row, location.col - 1),           // left
-                Coordinate(location.row - 1, location.col - 1),  // upper left
-                Coordinate(location.row - 1, location.col))          // upper right
+                Coordinate(location.row - 1, location.col - 1 + offset),  // upper left
+                Coordinate(location.row - 1, location.col + offset))          // upper right
     }
 
     /**
@@ -67,7 +68,7 @@ class PointedTopHexPattern : Pattern() {
      */
     override fun centerPointOf(location: Coordinate, sideLength: Double): Array<Double> {
         val width = sideLength * Math.sqrt(0.75) * 2
-        val x = (location.col * width) + (width / 2 * (location.col % 2))
+        val x = (location.col * width) + (width / 2 * (location.row % 2))
         val y = location.row * sideLength * 1.5
         return arrayOf(x, y)
     }
