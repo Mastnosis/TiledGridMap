@@ -14,6 +14,12 @@ class PointedTopHexPatternTest {
 
     val origin = Coordinate(0, 0)
 
+
+//    @ParameterizedTest
+//    fun range(c1: Coordinate, c2: Coordinate, expectedRange: Int, description: String){
+//
+//    }
+
     @Test
     fun rangeSelf() {
         assertEquals(0, pointedHexPattern.range(origin, origin))
@@ -76,4 +82,65 @@ class PointedTopHexPatternTest {
         val vertices = pointedHexPattern.verticesOf(origin, 30.0)
         assertArrayEquals(doubleArrayOf(0.0, -30.0, 26.0, -15.0, 26.0, 15.0, 0.0, 30.0, -26.0, 15.0, -26.0, -15.0), vertices.toDoubleArray(), 0.1)
     }
+
+    @Test
+    fun neighborsOfOrigin() {
+        val neighbors = pointedHexPattern.neighborsOf(Coordinate(0, 0))
+        assertEquals(6, neighbors.size)
+        assertTrue(neighbors.contains(Coordinate(0, 1)))
+        assertTrue(neighbors.contains(Coordinate(1, 0)))
+        assertTrue(neighbors.contains(Coordinate(1, -1)))
+        assertTrue(neighbors.contains(Coordinate(0, -1)))
+        assertTrue(neighbors.contains(Coordinate(-1, -1)))
+        assertTrue(neighbors.contains(Coordinate(-1, 0)))
+    }
+
+    @Test
+    fun neighborsOfNegativeQuadrant() {
+        val neighbors = pointedHexPattern.neighborsOf(Coordinate(-1, -1))
+        assertEquals(6, neighbors.size)
+        assertTrue(neighbors.contains(Coordinate(0, 0)))
+        assertTrue(neighbors.contains(Coordinate(0, -1)))
+        assertTrue(neighbors.contains(Coordinate(-1, -2)))
+        assertTrue(neighbors.contains(Coordinate(-2, -1)))
+        assertTrue(neighbors.contains(Coordinate(-2, 0)))
+        assertTrue(neighbors.contains(Coordinate(-1, 0)))
+    }
+
+    @Test
+    fun neighborsOfOddRow() {
+        val result = pointedHexPattern.neighborsOf(Coordinate(1, 0))
+        assertEquals(6, result.size)
+        assertTrue(result.contains(Coordinate(0, 0)))
+        assertTrue(result.contains(Coordinate(0, 1)))
+        assertTrue(result.contains(Coordinate(1, 1)))
+        assertTrue(result.contains(Coordinate(2, 1)))
+        assertTrue(result.contains(Coordinate(2, 0)))
+        assertTrue(result.contains(Coordinate(1, -1)))
+    }
+
+    @Test
+    fun neighborsOfEvenRow() {
+        val result = pointedHexPattern.neighborsOf(Coordinate(0, 1))
+        assertEquals(6, result.size)
+        assertTrue(result.contains(Coordinate(-1, 1)))
+        assertTrue(result.contains(Coordinate(0, 2)))
+        assertTrue(result.contains(Coordinate(1, 1)))
+        assertTrue(result.contains(Coordinate(1, 0)))
+        assertTrue(result.contains(Coordinate(0, 0)))
+        assertTrue(result.contains(Coordinate(-1, 0)))
+    }
+
+    @Test
+    fun neighborsOfEvenRow2() {
+        val result = pointedHexPattern.neighborsOf(Coordinate(2, 1))
+        assertEquals(6, result.size)
+        assertTrue(result.contains(Coordinate(3, 1)))
+        assertTrue(result.contains(Coordinate(2, 2)))
+        assertTrue(result.contains(Coordinate(1, 1)))
+        assertTrue(result.contains(Coordinate(1, 0)))
+        assertTrue(result.contains(Coordinate(3, 0)))
+        assertTrue(result.contains(Coordinate(2, 0)))
+    }
+
 }
