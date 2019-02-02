@@ -22,13 +22,13 @@ open class Grid @JvmOverloads constructor(val pattern: Pattern, var size: Double
      * @return all the coordinates within the radius of the center
      */
     fun area(center: Coordinate, radius: Int): Set<Coordinate> {
-        if (radius < 0) {
-            return emptySet()
-        } else if (radius == 0) {
-            return setOf(center)
-        } else {
-            val area = area(center, radius - 1)
-            return area.plus(area.flatMap { neighborsOf(it) })
+        return when {
+            radius < 0 -> emptySet()
+            radius == 0 -> setOf(center)
+            else -> {
+                val area = area(center, radius - 1)
+                area.plus(area.flatMap { neighborsOf(it) })
+            }
         }
     }
 
@@ -49,11 +49,15 @@ open class Grid @JvmOverloads constructor(val pattern: Pattern, var size: Double
      * @param target the second coordinate
      * @return number of hops from source to target
      */
+    open fun range(source: Coordinate, target: Coordinate): Int {
+        return pattern.range(source, target)
+    }
+
     /*
-        This has the advantage that it works with any pattern. No need to create a new algorithm for each.
+        The below algorithm has the advantage that it works to calculate range with any pattern. No need to create a new algorithm for each.
         The disadvantage is that it has terrible performance.
      */
-    fun range(source: Coordinate, target: Coordinate): Int {
+    internal fun universalRange(source: Coordinate, target: Coordinate): Int {
         var range: Int = 0
         while (!ring(source, range).contains(target)) {
             range++
