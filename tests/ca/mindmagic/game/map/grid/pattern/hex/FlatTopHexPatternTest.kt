@@ -1,30 +1,43 @@
 package ca.mindmagic.game.map.grid.pattern.hex
 
 import ca.mindmagic.game.map.grid.Coordinate
-import org.junit.Test
 
-import org.junit.Assert.*
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
+import kotlin.test.assertEquals
 
 class FlatTopHexPatternTest {
 
-    val pattern = FlatTopHexPattern()
 
-    val origin = Coordinate(0, 0)
+    companion object {
+        @JvmStatic
+        fun rangeArguments(): Stream<Arguments> {
+            return Stream.of(
+                    Arguments.of(Coordinate(0, 0), Coordinate(0, 0), 0, "range to self"),
 
-    @Test
-    fun range() {
-        assertEquals(0, pattern.range(origin, origin))
+                    Arguments.of(Coordinate(0, 0), Coordinate(-1, 0), 1, "range to top neighbor"),
+                    Arguments.of(Coordinate(0, 0), Coordinate(-1, 1), 1, "range to topright neighbor"),
+                    Arguments.of(Coordinate(0, 0), Coordinate(0, 1), 1, "range to bottomright neighbor"),
+                    Arguments.of(Coordinate(0, 0), Coordinate(1, 0), 1, "range to bottom neighbor"),
+                    Arguments.of(Coordinate(0, 0), Coordinate(0, -1), 1, "range to bottomleft neighbor"),
+                    Arguments.of(Coordinate(0, 0), Coordinate(-1, -1), 1, "range to topleft neighbor")
 
-        assertEquals(1, pattern.range(origin, Coordinate(-1, 0)))
-        assertEquals(1, pattern.range(origin, Coordinate(-1, 1)))
-        assertEquals(1, pattern.range(origin, Coordinate(0, 1)))
-        assertEquals(1, pattern.range(origin, Coordinate(1, 0)))
-        assertEquals(1, pattern.range(origin, Coordinate(0, -1)))
-        assertEquals(1, pattern.range(origin, Coordinate(-1, -1)))
+                    , Arguments.of(Coordinate(0, 0), Coordinate(1, 1), 2, "range (0,0) to (1,1)")
 
-        assertEquals(2, pattern.range(origin, Coordinate(1, 1)))
+                    , Arguments.of(Coordinate(1, 1), Coordinate(-2, -1), 4, "range (0,0) to (1,1)")
+                    , Arguments.of(Coordinate(-2, -1), Coordinate(-2, 1), 2, "range (0,0) to (1,1)")
 
-        assertEquals(4, pattern.range(Coordinate(1, 1), Coordinate(-2, -1)))
-        assertEquals(2, pattern.range(Coordinate(-2, -1), Coordinate(-2, 1)))
+            )
+        }
     }
+
+    @ParameterizedTest
+    @MethodSource("rangeArguments")
+    fun rangeTest(source: Coordinate, destination: Coordinate, expected: Int, description: String) {
+        val pattern = FlatTopHexPattern()
+        assertEquals(expected, pattern.range(source, destination), "Failed: $description")
+    }
+
 }
