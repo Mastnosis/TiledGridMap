@@ -27,25 +27,25 @@ class TiledGridMap<T>(pattern: Pattern, width: Int, height: Int, wrapHorizontal:
     }
 
     private fun calculateNeighbors(tile: T): Set<T> {
-        val neighbors = neighborsOf(getCoordinate(tile))
+        val neighbors = neighborsOf(coordinateOf(tile))
         return neighbors.stream()
-                .map { c -> getTile(c) }
+                .map { c -> tileAt(c) }
                 .collect(Collectors.toSet())
     }
 
-    fun getTile(row: Int, col: Int): T {
-        return tiles[row * super.width + col]
-    }
-
-    fun getCoordinate(tile: T): Coordinate {
-        val index = tiles.indexOf(tile);
-        return Coordinate(row(index), col(index))
-    }
-
-    fun getTile(location: Coordinate) = getTile(location.row, location.col)
+    fun tileAt(location: Coordinate) = tiles[location.row * super.width + location.col]
 
     fun neighborsOf(tile: T): Set<T> {
         return neighborMap[tile] ?: emptySet()
+    }
+
+    fun range(source: T, target: T): Int {
+        return range(coordinateOf(source), coordinateOf(target))
+    }
+
+    fun coordinateOf(tile: T): Coordinate {
+        val index = tiles.indexOf(tile);
+        return Coordinate(row(index), col(index))
     }
 
     private fun row(index: Int) = index / width
