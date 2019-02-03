@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TiledMap.iml" filepath="$PROJECT_DIR$/TiledMap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TiledGridMap.iml" filepath="$PROJECT_DIR$/TiledGridMap.iml" />
     </modules>
   </component>
 </project>

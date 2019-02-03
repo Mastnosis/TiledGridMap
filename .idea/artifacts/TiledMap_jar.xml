@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/TiledMap_jar</output-path>
     <root id="root">
       <element id="archive" name="TiledMap.jar">
-        <element id="module-output" name="TiledMap" />
+        <element id="module-output" name="TiledGridMap" />
       </element>
     </root>
   </artifact>
