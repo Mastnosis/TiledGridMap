@@ -23,13 +23,14 @@ class FlatTopHexPattern : Pattern() {
      * Returns all locations adjacent to the given coordinate
      */
     override fun neighborsOf(location: Coordinate): Set<Coordinate> {
+        val offset = if (location.col % 2 == 0) 0 else 1
         return setOf(
                 Coordinate(location.row - 1, location.col),           // top
-                Coordinate(location.row - 1, location.col + 1),           // top right
-                Coordinate(location.row, location.col + 1),     // bottom right
+                Coordinate(location.row - 1 + offset, location.col + 1),           // top right
+                Coordinate(location.row + offset, location.col + 1),     // bottom right
                 Coordinate(location.row + 1, location.col),           // bottom
-                Coordinate(location.row, location.col - 1),     // bottom left
-                Coordinate(location.row - 1, location.col - 1))           // upper left
+                Coordinate(location.row + offset, location.col - 1),     // bottom left
+                Coordinate(location.row - 1 + offset, location.col - 1))           // upper left
     }
 
     /**
