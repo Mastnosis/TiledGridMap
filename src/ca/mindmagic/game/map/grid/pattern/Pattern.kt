@@ -1,7 +1,6 @@
 package ca.mindmagic.game.map.grid.pattern
 
 import ca.mindmagic.game.map.grid.Coordinate
-import javafx.geometry.Point2D
 
 abstract class Pattern {
 
