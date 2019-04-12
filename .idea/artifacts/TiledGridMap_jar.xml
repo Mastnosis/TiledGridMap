@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+    <artifact type="jar" name="TiledGridMap:jar">
+        <output-path>$PROJECT_DIR$/out/artifacts/TiledGridMap_jar</output-path>
+        <root id="archive" name="TiledGridMap.jar">
+            <element id="module-output" name="TiledGridMap"/>
+        </root>
+    </artifact>
+</component>
